@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity SOC Career Roadmap</title>
+    <style>
+        @page {
+            margin: 0.75in;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #1e40af;
+            font-size: 32px;
+            margin: 0 0 10px 0;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+            font-style: italic;
+        }
+        
+        .objective-box {
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .objective-box h2 {
+            margin-top: 0;
+            color: #1e40af;
+            font-size: 20px;
+        }
+        
+        .phase {
+            margin: 35px 0;
+            page-break-inside: avoid;
+        }
+        
+        .phase-header {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .phase-header h2 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+        
+        .phase-header .timeline {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .goal-section {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .goal-section h3 {
+            color: #1e40af;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        
+        .section {
+            margin: 20px 0;
+        }
+        
+        .section h3 {
+            color: #1e3a8a;
+            font-size: 18px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .section h4 {
+            color: #334155;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+        }
+        
+        ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .tool-item {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .salary-box {
+            background: #dcfce7;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        
+        .timeline-visual {
+            background: linear-gradient(to right, #dbeafe 0%, #bfdbfe 33%, #93c5fd 66%, #60a5fa 100%);
+            height: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            top: -25px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+        
+        .cert-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            margin: 3px;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #1e40af;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            .phase {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cybersecurity SOC Career Roadmap</h1>
+        <div class="subtitle">Your Complete Guide to Breaking Into Cybersecurity (2025–2027)</div>
+    </div>
+
+    <div class="objective-box">
+        <h2>Career Objectives</h2>
+        <p><strong>SOC Tier 1 Analyst:</strong> May 2026</p>
+        <p><strong>SOC Tier 2 Analyst:</strong> December 2026</p>
+        <p><strong>Tier 3 Specialist Role:</strong> August 2027</p>
+        <p><strong>Target Employers:</strong> Government positions (RRSP match, pension) or Big Tech companies (Amazon, Google, Meta - RSUs)</p>
+    </div>
+
+    <div class="warning-box">
+        <strong>Reality Check:</strong> Online courses alone won't get you hired. Labs, hands-on projects, and demonstrable skills will. This roadmap focuses on what employers actually screen for.
+    </div>
+
+    <!-- PHASE 0 -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>PHASE 0 — FOUNDATION</h2>
+            <div class="timeline">Now → January 2026 (3-4 months)</div>
+        </div>
+
+        <div class="goal-section">
+            <h3>Goal: Build Strong Cybersecurity Fundamentals</h3>
+            <p>Become job-ready for SOC Tier 1 positions with hands-on experience and a portfolio that proves your abilities.</p>
+        </div>
+
+        <div class="section">
+            <h3>Daily Schedule (2-3 hours minimum)</h3>
+            <ul>
+                <li>Complete Udemy cybersecurity course (4-6 weeks maximum)</li>
+                <li>TryHackMe SOC Level 1 learning path (primary focus)</li>
+                <li>Hands-on labs with real security tools</li>
+                <li>Build GitHub portfolio with writeups</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Core Knowledge Areas</h3>
+            
+            <h4>Networking Fundamentals</h4>
+            <ul>
+                <li>TCP/IP protocol suite and packet structure</li>
+                <li>OSI model (all 7 layers) and real-world application</li>
+                <li>DNS resolution process and common attacks</li>
+                <li>HTTP/HTTPS differences and TLS basics</li>
+                <li>Common ports (22, 80, 443, 3389, 445, 53) and their services</li>
+                <li>Packet flow analysis and network troubleshooting</li>
+            </ul>
+
+            <h4>Operating Systems</h4>
+            <ul>
+                <li><strong>Windows:</strong> Event Logs (Event Viewer), focusing on Security logs</li>
+                <li>Event ID 4624 (successful logon), 4625 (failed logon), 4688 (process creation)</li>
+                <li><strong>Linux:</strong> Log locations (/var/log/auth.log, /var/log/syslog, /var/log/secure)</li>
+                <li>Command line basics: grep, tail, cat, ps, netstat</li>
+                <li>File permissions and user management</li>
+            </ul>
+
+            <h4>Security Concepts</h4>
+            <ul>
+                <li>CIA Triad (Confidentiality, Integrity, Availability)</li>
+                <li>Identity and Access Management (IAM)</li>
+                <li>Principle of least privilege</li>
+                <li>Authentication vs authorization vs accounting</li>
+                <li>Common attack vectors (phishing, malware, brute force)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Tools You MUST Master</h3>
+            <div class="tools-grid">
+                <div class="tool-item"><strong>Wireshark</strong><br>Packet capture and analysis</div>
+                <div class="tool-item"><strong>Nmap</strong><br>Port scanning and enumeration</div>
+                <div class="tool-item"><strong>tcpdump</strong><br>CLI packet capture</div>
+                <div class="tool-item"><strong>Splunk</strong><br>SIEM basics and log searching</div>
+                <div class="tool-item"><strong>Windows Event Viewer</strong><br>Log analysis</div>
+                <div class="tool-item"><strong>Linux CLI</strong><br>Log parsing and investigation</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Hands-On Lab Requirements</h3>
+            <ul>
+                <li><strong>TryHackMe SOC Level 1:</strong> Complete all rooms focusing on alert triage, phishing analysis, and brute-force detection</li>
+                <li><strong>Splunk Labs:</strong> Free trial or Splunk fundamentals training (free)</li>
+                <li><strong>Blue Team Labs Online:</strong> Practice incident investigations</li>
+                <li><strong>Wireshark Practice:</strong> Analyze PCAP files from malware-traffic-analysis.net</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h4>Portfolio Output by January 2026 (Non-Negotiable)</h4>
+            <p><strong>Create a GitHub repository containing:</strong></p>
+            <ul>
+                <li>3 complete incident investigation writeups (document your process, findings, and recommendations)</li>
+                <li>1 detailed phishing email analysis (headers, URLs, attachments, IOCs)</li>
+                <li>1 brute-force attack investigation (log analysis, timeline, mitigation)</li>
+                <li>Screenshots and explanations of your methodology</li>
+            </ul>
+            <p><strong>Also required:</strong> Optimized LinkedIn profile highlighting SOC skills and lab experience</p>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Critical Deadline:</strong> If this portfolio isn't complete by January 2026, your May job target will slip. This is your proof of ability.
+        </div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>PHASE 1 — SOC TIER 1 EMPLOYMENT</h2>
+            <div class="timeline">February → May 2026 (Job search and first role)</div>
+        </div>
+
+        <div class="goal-section">
+            <h3>Goal: Get Hired as SOC Tier 1 Analyst</h3>
+            <p>Secure your first cybersecurity position and begin building professional experience.</p>
+        </div>
+
+        <div class="section">
+            <h3>Job Application Strategy</h3>
+            <p><strong>Start applying in February 2026</strong></p>
+            
+            <h4>Target Job Titles</h4>
+            <ul>
+                <li>SOC Analyst I / Junior SOC Analyst</li>
+                <li>Junior Security Analyst</li>
+                <li>Cybersecurity Analyst (entry-level)</li>
+                <li>Security Operations Analyst</li>
+                <li>Incident Response Analyst (entry)</li>
+            </ul>
+
+            <h4>Target Employers (Canada)</h4>
+            <ul>
+                <li><strong>MSSPs:</strong> Secureworks, Arctic Wolf, S3cure, ReliaQuest</li>
+                <li><strong>Financial:</strong> RBC, TD, BMO, Scotiabank, Manulife</li>
+                <li><strong>Healthcare:</strong> Alberta Health Services, provincial health authorities</li>
+                <li><strong>Telecom:</strong> Telus, Rogers, Bell</li>
+                <li><strong>Energy:</strong> Suncor, Enbridge, TC Energy</li>
+                <li><strong>Government:</strong> Municipal and provincial IT departments</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Skills You Must Demonstrate in Interviews</h3>
+            <table>
+                <tr>
+                    <th>Skill</th>
+                    <th>What They'll Ask</th>
+                </tr>
+                <tr>
+                    <td><strong>Alert Triage</strong></td>
+                    <td>Walk through how you'd investigate a suspicious login alert</td>
+                </tr>
+                <tr>
+                    <td><strong>False Positive vs True Positive</strong></td>
+                    <td>Explain indicators that differentiate legitimate vs malicious activity</td>
+                </tr>
+                <tr>
+                    <td><strong>Phishing Analysis</strong></td>
+                    <td>Describe your process for analyzing a suspicious email</td>
+                </tr>
+                <tr>
+                    <td><strong>Incident Lifecycle</strong></td>
+                    <td>Explain steps: identification, containment, escalation, documentation</td>
+                </tr>
+                <tr>
+                    <td><strong>Tool Knowledge</strong></td>
+                    <td>Discuss experience with SIEM, Wireshark, or any security tools</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>Core Tier 1 Responsibilities</h3>
+            <ul>
+                <li>Monitor security alerts from SIEM and other detection systems</li>
+                <li>Perform initial triage on security incidents</li>
+                <li>Analyze phishing emails and malicious attachments</li>
+                <li>Document incidents clearly with timelines and evidence</li>
+                <li>Escalate complex incidents to Tier 2 analysts</li>
+                <li>Update tickets and maintain accurate records</li>
+                <li>Follow security playbooks and SOPs</li>
+            </ul>
+        </div>
+
+        <div class="salary-box">
+            <strong>Expected Salary (Canada):</strong> $55,000 - $70,000 CAD
+            <br><strong>Pro Tip:</strong> Night/weekend shifts often lead to faster hiring
+        </div>
+
+        <div class="highlight-box">
+            <strong>Important Advice:</strong> Take the first reasonable offer. Don't negotiate yourself out of your first role. Experience is more valuable than an extra $5k at this stage.
+        </div>
+
+        <div class="section">
+            <h3>Interview Preparation Checklist</h3>
+            <ul>
+                <li>Prepare 2-3 stories from your lab work using STAR method</li>
+                <li>Know your GitHub projects inside and out</li>
+                <li>Practice explaining technical concepts simply</li>
+                <li>Research the company's security posture and recent incidents</li>
+                <li>Prepare questions about their SOC operations and tools</li>
+                <li>Review common SOC interview questions on Glassdoor</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>PHASE 2 — TIER 1 TO TIER 2 ADVANCEMENT</h2>
+            <div class="timeline">May → December 2026 (7-8 months of growth)</div>
+        </div>
+
+        <div class="goal-section">
+            <h3>Goal: Transition from Reactive Monitoring to Deep Analysis</h3>
+            <p>This phase determines your career trajectory. You'll work full-time while building specialized skills that lead to Tier 2 promotion or better opportunities.</p>
+        </div>
+
+        <div class="warning-box">
+            <strong>Critical Decision Point:</strong> You must choose your Tier 3 specialization NOW (May 2026). This determines what you study outside work. Choose based on your career target:
+            <ul>
+                <li><strong>Cloud Security:</strong> Best for Big Tech (Amazon, Google, Meta)</li>
+                <li><strong>Detection Engineering:</strong> High demand, technical depth</li>
+                <li><strong>DFIR (Digital Forensics & Incident Response):</strong> Best for government and banking</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>May - August 2026: Become Tier-2-Ready</h3>
+            
+            <h4>At Work (Show Initiative)</h4>
+            <ul>
+                <li><strong>Volunteer for complex cases:</strong> Malware alerts, high-severity incidents</li>
+                <li><strong>Root cause analysis:</strong> Don't just escalate — understand WHY attacks succeeded</li>
+                <li><strong>Reduce false positives:</strong> Tune alerts and document improvements</li>
+                <li><strong>Improve playbooks:</strong> Suggest process enhancements based on your investigations</li>
+                <li><strong>Mentor newer analysts:</strong> Teaching reinforces your knowledge</li>
+            </ul>
+
+            <h4>Outside Work (2 hours daily)</h4>
+            <p><strong>Start building toward your chosen specialization:</strong></p>
+            
+            <p><strong>If choosing Cloud Security:</strong></p>
+            <ul>
+                <li>Microsoft Learn: AZ-900 Azure Fundamentals (free)</li>
+                <li>AWS Skill Builder: Cloud Practitioner Essentials</li>
+                <li>Focus: IAM, CloudTrail, GuardDuty, Azure Sentinel</li>
+            </ul>
+
+            <p><strong>If choosing Detection Engineering:</strong></p>
+            <ul>
+                <li>Advanced Splunk or Azure KQL queries</li>
+                <li>MITRE ATT&CK framework deep dive</li>
+                <li>Python for security automation</li>
+                <li>Sigma rule writing</li>
+            </ul>
+
+            <p><strong>If choosing DFIR:</strong></p>
+            <ul>
+                <li>Memory forensics basics (Volatility)</li>
+                <li>Disk forensics (Autopsy, FTK Imager)</li>
+                <li>Evidence handling and chain of custody</li>
+                <li>Incident command structure</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>August - December 2026: Tier 2 Promotion Push</h3>
+            
+            <h4>Skills to Add (Mandatory for Tier 2)</h4>
+            <ul>
+                <li><strong>MITRE ATT&CK Framework:</strong> Map alerts to tactics and techniques</li>
+                <li><strong>Advanced SIEM:</strong> Write SPL/KQL queries, create correlation rules, tune alerts</li>
+                <li><strong>EDR Platforms:</strong> Microsoft Defender for Endpoint, CrowdStrike concepts</li>
+                <li><strong>Threat Hunting:</strong> Hypothesis-driven searches, detect stealthy behavior</li>
+                <li><strong>Endpoint Telemetry:</strong> Process trees, network connections, file operations</li>
+            </ul>
+
+            <h4>Certification Options (Choose 1-2)</h4>
+            <div style="margin: 15px 0;">
+                <span class="cert-badge">Splunk Core Certified User</span>
+                <span class="cert-badge">Microsoft AZ-900</span>
+                <span class="cert-badge">Microsoft AZ-500</span>
+                <span class="cert-badge">Blue Team Level 1 (BTL1)</span>
+                <span class="cert-badge">CompTIA CySA+</span>
+            </div>
+            <p><em>Note: Certifications help but experience matters more. Don't delay your career for certs.</em></p>
+        </div>
+
+        <div class="section">
+            <h3>Tier 2 Analyst Responsibilities</h3>
+            <ul>
+                <li>Deep-dive investigations of complex security incidents</li>
+                <li>Threat hunting to proactively find compromises</li>
+                <li>Tuning detection rules and reducing false positives</li>
+                <li>Creating and improving security playbooks</li>
+                <li>Mentoring Tier 1 analysts</li>
+                <li>Owning incidents from detection through resolution</li>
+                <li>Communicating technical findings to management</li>
+            </ul>
+        </div>
+
+        <div class="salary-box">
+            <strong>Expected Tier 2 Salary:</strong> $75,000 - $95,000 CAD
+            <br><strong>Promotion Timeline:</strong> Aim for internal promotion by Q4 2026
+        </div>
+
+        <div class="highlight-box">
+            <strong>⚠️ Important:</strong> If your current employer won't promote you to Tier 2 by December 2026, switch companies. Loyalty doesn't accelerate your career — results and opportunities do.
+        </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>PHASE 3 — TIER 2 TO SPECIALIST (TIER 3)</h2>
+            <div class="timeline">January → August 2027 (8 months to specialist level)</div>
+        </div>
+
+        <div class="goal-section">
+            <h3>Goal: Specialize Into High-Value Roles</h3>
+            <p>Transition from generalist analyst to specialist engineer — the roles that Big Tech and government actually compete for.</p>
+        </div>
+
+        <div class="warning-box">
+            <strong>Reality Check: What "Tier 3" Actually Means</strong>
+            <p>Tier 3 ≠ "Senior SOC Watcher"</p>
+            <p>Tier 3 = Specialist with deep expertise in a specific domain</p>
+            <p><strong>Big Tech and government don't hire "SOC Tier 3" — they hire engineers with specialized skills.</strong></p>
+        </div>
+
+        <div class="section">
+            <h3>High-Value Specialist Roles</h3>
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>What They Do</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>Detection Engineer</strong></td>
+                    <td>Write detection rules, automate security responses, reduce false positives</td>
+                    <td>Big Tech, MSSPs</td>
+                </tr>
+                <tr>
+                    <td><strong>Cloud Security Engineer</strong></td>
+                    <td>Secure cloud infrastructure (AWS, Azure, GCP), monitor cloud-native threats</td>
+                    <td>Big Tech, SaaS companies</td>
+                </tr>
+                <tr>
+                    <td><strong>Senior Incident Responder</strong></td>
+                    <td>Lead major incidents, coordinate response teams, forensic investigations</td>
+                    <td>Government, Finance</td>
+                </tr>
+                <tr>
+                    <td><strong>Threat Hunter</strong></td>
+                    <td>Proactively search for threats, develop hunting methodologies</td>
+                    <td>Big Tech, Government</td>
+                </tr>
+                <tr>
+                    <td><strong>Security Engineer</strong></td>
+                    <td>Design security systems, integrate tools, build automation</td>
+                    <td>Big Tech, Enterprise</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>January - April 2027: Deep Specialization</h3>
+            
+            <h4>If Targeting BIG TECH (Amazon, Google, Meta)</h4>
+            <p><strong>Focus Areas:</strong></p>
+            <ul>
+                <li><strong>Cloud Security Mastery:</strong>
+                    <ul>
+                        <li>AWS: IAM policies, CloudTrail analysis, GuardDuty, Security Hub</li>
+                        <li>Azure: Sentinel, Defender for Cloud, KQL expertise</li>
+                        <li>GCP: Security Command Center, Cloud Logging</li>
+                    </ul>
+                </li>
+                <li><strong>Detection Engineering:</strong>
+                    <ul>
+                        <li>Write detection rules in Sigma and KQL</li>
+                        <li>Automate response with Python and PowerShell</li>
+                        <li>Build scalable detection pipelines</li>
+                    </ul>
+                </li>
+                <li><strong>Programming:</strong>
+                    <ul>
+                        <li>Python for security automation</li>
+                        <li>REST API integration</li>
+                        <li>Infrastructure as Code (Terraform basics)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>If Targeting GOVERNMENT / FINANCE</h4>
+            <p><strong>Focus Areas:</strong></p>
+            <ul>
+                <li><strong>DFIR (Digital Forensics & Incident Response):</strong>
+                    <ul>
+                        <li>Memory forensics with Volatility</li>
+                        <li>Disk forensics with Autopsy and FTK Imager</li>
+                        <li>Network forensics and packet analysis</li>
+                        <li>Malware analysis basics</li>
+                    </ul>
+                </li>
+                <li><strong>Incident Command:</strong>
+                    <ul>
+                        <li>Lead incident response exercises</li>
+                        <li>Coordinate cross-functional teams</li>
+                        <li>Executive communication and reporting</li>
+                    </ul>
+                </li>
+                <li><strong>Compliance & Governance:</strong>
+                    <ul>
+                        <li>Chain of custody procedures</li>
+                        <li>Evidence preservation and legal requirements</li>
+                        <li>Security clearance readiness (Canada: Reliability Status, Secret)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>April - August 2027: Applications & Offers</h3>
+            
+            <h4>Target Employers: Big Tech</h4>
+            <ul>
+                <li><strong>Amazon:</strong> Security Engineer, Detection Engineer (AWS Security)</li>
+                <li><strong>Google:</strong> Security Operations Analyst/Engineer, Trust & Safety</li>
+                <li><strong>Meta:</strong> Security Engineer, Blue Team roles</li>
+                <li><strong>Microsoft:</strong> Defender team, Azure Security roles</li>
+                <li><strong>Shopify:</strong> Security Operations (Canadian company, Toronto office)</li>
+            </ul>
+
+            <h4>Target Employers: Government / Crown Corporations</h4>
+            <ul>
+                <li><strong>Federal:</strong> CRA (Canada Revenue Agency), SSC (Shared Services Canada), CSIS (analyst roles)</li>
+                <li><strong>Provincial:</strong> Alberta Cyber Security, BC Government, Ontario Public Service</li>
+                <li><strong>Finance:</strong> RBC, TD, BMO, Scotiabank, Manulife (major banks prioritize stability)</li>
+                <li><strong>Energy:</strong> Suncor, TC Energy, Enbridge (critical infrastructure)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Application Strategy for Specialist Roles</h3>
+            <ul>
+                <li><strong>Resume Focus:</strong> Highlight specialized skills, not generic SOC tasks</li>
+                <li><strong>GitHub Portfolio:</strong> Show detection rules, automation scripts, analysis reports</li>
+                <li><strong>Networking:</strong> Connect with security engineers at target companies on LinkedIn</li>
+                <li><strong>Referrals:</strong> Internal referrals significantly increase interview rates</li>
+                <li><strong>Certifications (if targeting govt):</strong> Consider GCIH, GCIA, or GCFE</li>
+            </ul>
+        </div>
+
+        <div class="salary-box">
+            <strong>Expected Specialist Compensation (Canada):</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                <li><strong>Base Salary:</strong> $100,000 - $140,000 CAD</li>
+                <li><strong>Big Tech:</strong> RSUs (stock grants), signing bonus, annual bonus</li>
+                <li><strong>Government:</strong> Defined benefit pension, RRSP match (up to 10%), job security</li>
+                <li><strong>Work Mode:</strong> Hybrid or remote options common</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h4>What Big Tech Screens For (Based on Amazon/Google)</h4>
+            <ul>
+                <li>Cloud security experience (AWS/Azure/GCP)</li>
+                <li>Programming ability (Python, not just scripting)</li>
+                <li>Scale mindset (building systems for thousands of alerts/day)</li>
+                <li>Automation focus (reducing manual work)</li>
+                <li>Detection engineering experience</li>
+                <li>Problem-solving over tool knowledge</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SUMMARY TIMELINE -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>COMPLETE TIMELINE SUMMARY</h2>
+        </div>
+
+        <table>
+            <tr>
+                <th>Timeline</th>
+                <th>Phase</th>
+                <th>Key Milestone</th>
+                <th>Salary Range</th>
+            </tr>
+            <tr>
+                <td>Now - Jan 2026</td>
+                <td>Foundation</td>
+                <td>Complete labs, build portfolio, optimize LinkedIn</td>
+                <td>$0 (learning)</td>
+            </tr>
+            <tr>
+                <td>Feb - May 2026</td>
+                <td>SOC Tier 1</td>
+                <td>Get hired as Junior SOC Analyst</td>
+                <td>$55k - $70k CAD</td>
+            </tr>
+            <tr>
+                <td>May - Dec 2026</td>
+                <td>Tier 1 → Tier 2</td>
+                <td>Promotion or switch to Tier 2 role</td>
+                <td>$75k - $95k CAD</td>
+            </tr>
+            <tr>
+                <td>Jan - Aug 2027</td>
+                <td>Tier 2 → Specialist</td>
+                <td>Land Detection Engineer, Cloud Security, or DFIR role</td>
+                <td>$100k - $140k CAD</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- CHOOSING YOUR PATH -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>CHOOSING YOUR SPECIALIZATION</h2>
+        </div>
+
+        <div class="section">
+            <h3>Path 1: Cloud Security Engineer</h3>
+            <p><strong>Best for:</strong> Big Tech (Amazon, Google, Meta), SaaS companies, modern enterprises</p>
+            <p><strong>Skills Required:</strong></p>
+            <ul>
+                <li>Deep knowledge of AWS/Azure/GCP security services</li>
+                <li>IAM policies, cloud logging, threat detection</li>
+                <li>Infrastructure as Code (Terraform, CloudFormation)</li>
+                <li>Container security (Kubernetes, Docker)</li>
+            </ul>
+            <p><strong>Certifications:</strong> AWS Certified Security - Specialty, Azure Security Engineer (AZ-500)</p>
+        </div>
+
+        <div class="section">
+            <h3>Path 2: Detection Engineer</h3>
+            <p><strong>Best for:</strong> Big Tech, MSSPs, companies with large security teams</p>
+            <p><strong>Skills Required:</strong></p>
+            <ul>
+                <li>Expert-level SIEM query writing (SPL, KQL, SQL)</li>
+                <li>Detection rule development (Sigma, YARA)</li>
+                <li>Python for automation and tool integration</li>
+                <li>MITRE ATT&CK framework mastery</li>
+            </ul>
+            <p><strong>Certifications:</strong> Splunk Enterprise Security Certified Admin, Blue Team Level 2 (BTL2)</p>
+        </div>
+
+        <div class="section">
+            <h3>Path 3: DFIR Specialist</h3>
+            <p><strong>Best for:</strong> Government, finance, incident response consulting</p>
+            <p><strong>Skills Required:</strong></p>
+            <ul>
+                <li>Memory forensics (Volatility, Rekall)</li>
+                <li>Disk forensics (Autopsy, EnCase, FTK)</li>
+                <li>Malware analysis basics</li>
+                <li>Evidence handling and legal procedures</li>
+            </ul>
+            <p><strong>Certifications:</strong> GCFE, GCIH, GCIA, or CHFI</p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Decision Framework:</strong>
+            <ul>
+                <li>Want to work at FAANG/Big Tech? → <strong>Cloud Security</strong> or <strong>Detection Engineering</strong></li>
+                <li>Want stability, pension, and work-life balance? → <strong>Government DFIR</strong></li>
+                <li>Want high salary and fast career growth? → <strong>Detection Engineering</strong></li>
+                <li>Want to lead major incident responses? → <strong>DFIR Specialist</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CRITICAL SUCCESS FACTORS -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>CRITICAL SUCCESS FACTORS</h2>
+        </div>
+
+        <div class="section">
+            <h3>What Will Make or Break Your Career</h3>
+            
+            <h4>✅ Do These Things</h4>
+            <ul>
+                <li><strong>Build in public:</strong> Document everything on GitHub and LinkedIn</li>
+                <li><strong>Network intentionally:</strong> Connect with security professionals, attend local meetups</li>
+                <li><strong>Switch companies strategically:</strong> 2-3 years per role is normal and healthy</li>
+                <li><strong>Focus on depth:</strong> Master a few tools deeply rather than knowing many superficially</li>
+                <li><strong>Automate everything:</strong> Show you can save time and scale operations</li>
+                <li><strong>Ask for stretch projects:</strong> Volunteer for the hard problems others avoid</li>
+            </ul>
+
+            <h4>❌ Avoid These Mistakes</h4>
+            <ul>
+                <li><strong>Certificate collecting:</strong> Don't delay your career waiting for the "perfect" certification</li>
+                <li><strong>Staying too long:</strong> If promotion doesn't happen after 12-18 months, leave</li>
+                <li><strong>Tutorial hell:</strong> Watching courses without building projects won't get you hired</li>
+                <li><strong>Neglecting soft skills:</strong> Communication is as important as technical ability</li>
+                <li><strong>Ignoring job market signals:</strong> Apply to 20+ positions, track what gets responses</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>The Truth About SOC Careers</h3>
+            <ul>
+                <li><strong>SOC is a launchpad, not the destination.</strong> Use it to build experience, then specialize.</li>
+                <li><strong>Big Tech hires engineers, not alert-clickers.</strong> Focus on automation and building.</li>
+                <li><strong>Government hires trusted specialists.</strong> Clearances and compliance matter.</li>
+                <li><strong>Switching companies accelerates salary growth.</strong> Don't expect 30%+ raises from internal promotions.</li>
+                <li><strong>Depth beats certificates every time.</strong> Hiring managers value real experience over paper credentials.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>KEY RESOURCES & PLATFORMS</h2>
+        </div>
+
+        <div class="section">
+            <h3>Learning Platforms</h3>
+            <ul>
+                <li><strong>TryHackMe:</strong> Best for SOC-focused hands-on labs (SOC Level 1 path is essential)</li>
+                <li><strong>Blue Team Labs Online:</strong> Real-world incident investigation scenarios</li>
+                <li><strong>CyberDefenders:</strong> DFIR challenges and blue team CTFs</li>
+                <li><strong>LetsDefend:</strong> SOC analyst simulations with real SIEM interfaces</li>
+                <li><strong>Splunk Training:</strong> Free Splunk Fundamentals course (splunk.com/training)</li>
+                <li><strong>Microsoft Learn:</strong> Free Azure and M365 security training</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Essential Tools & Software</h3>
+            <ul>
+                <li><strong>SIEM:</strong> Splunk (free trial), Azure Sentinel (free tier)</li>
+                <li><strong>Network Analysis:</strong> Wireshark, tcpdump, NetworkMiner</li>
+                <li><strong>Endpoint:</strong> Sysmon, Velociraptor (free EDR alternative)</li>
+                <li><strong>Forensics:</strong> Autopsy, FTK Imager, Volatility</li>
+                <li><strong>Malware Analysis:</strong> VirusTotal, ANY.RUN (free sandboxing)</li>
+                <li><strong>Cloud Labs:</strong> AWS Free Tier, Azure Free Account</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>Communities & Networking</h3>
+            <ul>
+                <li><strong>LinkedIn:</strong> Follow CISO and security leaders at target companies</li>
+                <li><strong>Local Meetups:</strong> BSides Edmonton, ISACA chapters, OWASP</li>
+                <li><strong>Discord/Slack:</strong> BlueTeamVillage, TryHackMe community</li>
+                <li><strong>Reddit:</strong> r/cybersecurity, r/AskNetsec (but focus more on doing than reading)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FINAL ADVICE -->
+    <div class="phase">
+        <div class="phase-header">
+            <h2>FINAL MENTOR ADVICE</h2>
+        </div>
+
+        <div class="success-box">
+            <h4>Remember These Truths</h4>
+            <p><strong>You don't need to be perfect to start.</strong> You need to be good enough to get hired, then you'll learn on the job.</p>
+            <p><strong>Imposter syndrome is normal.</strong> Everyone in cybersecurity feels it. Push through anyway.</p>
+            <p><strong>Your first job won't be your dream job.</strong> It's a stepping stone. Take it, learn, and move up.</p>
+            <p><strong>The timeline is aggressive but achievable.</strong> Others have done it. You can too.</p>
+            <p><strong>Consistency beats intensity.</strong> 2 hours daily for 18 months beats 8-hour weekend cramming.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h4>Action Items for Tomorrow</h4>
+            <ol>
+                <li>Set up your GitHub account if you don't have one</li>
+                <li>Create a TryHackMe account and start SOC Level 1 path</li>
+                <li>Update your LinkedIn profile with "Aspiring SOC Analyst" and skills you're learning</li>
+                <li>Block 2-3 hours daily in your calendar for cybersecurity learning</li>
+                <li>Join one security-focused Discord or Slack community</li>
+            </ol>
+        </div>
+
+        <div class="warning-box">
+            <strong>The Hard Truth:</strong> Most people who say they want to break into cybersecurity never actually do it. They get stuck in tutorial hell, wait for the "perfect" time, or give up after a few weeks. Don't be most people. The market needs skilled analysts. Execute this plan with discipline, and you'll be one of them.
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Cybersecurity SOC Career Roadmap (2025-2027)</strong></p>
+        <p>Created: December 2024 | Target Completion: August 2027</p>
+        <p>Remember: Your career is a marathon, not a sprint. Stay focused, stay consistent, and keep building.</p>
+    </div>
+
+    <script>
+        // Add print functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const printBtn = document.createElement('button');
+            printBtn.textContent = '🖨️ Print / Save as PDF';
+            printBtn.style.cssText = 'position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1000;';
+            printBtn.onclick = () => window.print();
+            document.body.appendChild(printBtn);
+        });
+    </script>
+</body>
+</html>

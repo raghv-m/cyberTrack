@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+cybersec-career-tracker/node_modules/
+cybersec-career-tracker/backend/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.production
+cybersec-career-tracker/.env
+cybersec-career-tracker/backend/.env
+
+# Build outputs
+dist/
+build/
+cybersec-career-tracker/dist/
+cybersec-career-tracker/build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# Misc
+*.pdf
+
