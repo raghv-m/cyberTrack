@@ -35,6 +35,7 @@ export default function Layout() {
     { name: 'Learning Platforms', href: '/app/platforms', icon: Globe },
     { name: 'Study Resources', href: '/app/resources', icon: FileText },
     { name: 'Cyber News', href: '/app/news', icon: Newspaper },
+    { name: 'Incident Reports', href: '/app/incident-reports', icon: Shield },
     { name: 'Portfolio', href: '/app/portfolio', icon: FolderGit2 },
     { name: 'Job Tracker', href: '/app/jobs', icon: Briefcase },
     { name: 'Notifications', href: '/app/notifications', icon: Bell },

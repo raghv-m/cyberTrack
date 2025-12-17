@@ -15,6 +15,10 @@ import TodoList from './pages/TodoList'
 import LearningPlatforms from './pages/LearningPlatforms'
 import Resources from './pages/Resources'
 import News from './pages/News'
+import IncidentReports from './pages/IncidentReports'
+import IncidentReportForm from './pages/IncidentReportForm'
+import TermsOfService from './pages/TermsOfService'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import LandingPage from './pages/LandingPage'
 import Layout from './components/Layout'
 import DailyPrompt from './components/DailyPrompt'
@@ -34,6 +38,10 @@ function AppRoutes() {
     <Routes>
       {/* Landing Page */}
       <Route path="/" element={<LandingPage />} />
+
+      {/* Legal Pages (Public) */}
+      <Route path="/terms-of-service" element={<TermsOfService />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
       {/* Public routes */}
       <Route path="/login" element={
@@ -66,6 +74,9 @@ function AppRoutes() {
         <Route path="platforms" element={<LearningPlatforms />} />
         <Route path="resources" element={<Resources />} />
         <Route path="news" element={<News />} />
+        <Route path="incident-reports" element={<IncidentReports />} />
+        <Route path="incident-report-form" element={<IncidentReportForm />} />
+        <Route path="incident-report/:id" element={<IncidentReports />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="portfolio" element={<Portfolio />} />
         <Route path="jobs" element={<JobApplications />} />
