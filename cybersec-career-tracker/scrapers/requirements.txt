@@ -1,0 +1,25 @@
+# Web Scraping
+beautifulsoup4==4.12.2
+requests==2.31.0
+selenium==4.15.2
+newspaper3k==0.2.8
+feedparser==6.0.10
+lxml==4.9.3
+
+# NLP & AI
+spacy==3.7.2
+nltk==3.8.1
+
+# Firebase
+firebase-admin==6.2.0
+
+# Scheduling
+schedule==1.2.0
+
+# Utilities
+python-dotenv==1.0.0
+python-dateutil==2.8.2
+
+# Web Driver
+webdriver-manager==4.0.1
+

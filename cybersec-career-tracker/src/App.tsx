@@ -14,6 +14,7 @@ import Settings from './pages/Settings'
 import TodoList from './pages/TodoList'
 import LearningPlatforms from './pages/LearningPlatforms'
 import Resources from './pages/Resources'
+import News from './pages/News'
 import LandingPage from './pages/LandingPage'
 import Layout from './components/Layout'
 import DailyPrompt from './components/DailyPrompt'
@@ -64,6 +65,7 @@ function AppRoutes() {
         <Route path="todos" element={<TodoList />} />
         <Route path="platforms" element={<LearningPlatforms />} />
         <Route path="resources" element={<Resources />} />
+        <Route path="news" element={<News />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="portfolio" element={<Portfolio />} />
         <Route path="jobs" element={<JobApplications />} />
