@@ -1,4 +1,4 @@
-import { Cloud, Shield, Lock, Network } from 'lucide-react';
+import { Cloud } from 'lucide-react';
 
 export default function CloudSecurity() {
   return (

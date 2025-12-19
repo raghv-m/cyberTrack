@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Mail, Calendar, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Bell, Mail, AlertTriangle, CheckCircle } from 'lucide-react';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 

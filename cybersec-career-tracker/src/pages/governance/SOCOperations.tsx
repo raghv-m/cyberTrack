@@ -1,4 +1,4 @@
-import { Shield, Users, AlertTriangle, TrendingUp, Clock, Target } from 'lucide-react';
+import { Shield, Users, AlertTriangle, Target } from 'lucide-react';
 
 export default function SOCOperations() {
   return (

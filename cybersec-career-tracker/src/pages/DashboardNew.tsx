@@ -5,13 +5,13 @@ import { db } from '../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import {
   Zap, Target, Award, Code, Briefcase, TrendingUp,
-  Clock, CheckCircle, ArrowRight, Flame, BookOpen, Shield
+  Clock, CheckCircle, ArrowRight, Flame, BookOpen
 } from 'lucide-react';
 
 export default function DashboardNew() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [careerHealth, setCareerHealth] = useState(75);
   const [stats, setStats] = useState({
     labsCompleted: 12,
@@ -20,12 +20,12 @@ export default function DashboardNew() {
     applicationsSubmitted: 5,
     streak: 7,
   });
-  const [nextAction, setNextAction] = useState({
+  const [nextAction] = useState({
     title: 'Complete Module 3: Network Security',
     type: 'learning',
     dueDate: 'Dec 31',
   });
-  const [learningPlan, setLearningPlan] = useState([
+  const [learningPlan] = useState([
     { id: 1, title: 'Module 1: Network Security', progress: 80, dueDate: 'Oct 18' },
     { id: 2, title: 'Module 2: Incident Response', progress: 60, dueDate: 'Oct 26' },
     { id: 3, title: 'Module 3: Malware Analysis', progress: 40, dueDate: 'Oct 28' },

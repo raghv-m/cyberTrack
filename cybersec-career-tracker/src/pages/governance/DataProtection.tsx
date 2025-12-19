@@ -1,4 +1,4 @@
-import { Database, Lock, Trash2, Shield } from 'lucide-react';
+import { Database } from 'lucide-react';
 
 export default function DataProtection() {
   return (

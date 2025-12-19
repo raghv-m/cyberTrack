@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import {
-  Shield, Target, TrendingUp, Award, Zap, CheckCircle, ArrowRight,
-  Code, BookOpen, Briefcase, Activity, BarChart3, Flame, Clock, Users
+  Shield, Target, TrendingUp, Award, Zap, ArrowRight,
+  Code, Briefcase, Activity, Flame, Users
 } from 'lucide-react';
 
 export default function LandingPage() {

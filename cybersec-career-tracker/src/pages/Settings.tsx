@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { User, Bell, Mail, Shield, Download, Trash2 } from 'lucide-react';
+import { User, Bell, Shield, Download, Trash2 } from 'lucide-react';
 
 export default function Settings() {
   const { currentUser } = useAuth();

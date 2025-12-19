@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
-import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { CheckCircle, Circle, Trash2, Plus, Target, Calendar, TrendingUp } from 'lucide-react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { CheckCircle, Circle, Trash2, Plus, Target, TrendingUp } from 'lucide-react';
 
 interface Todo {
   id: string;

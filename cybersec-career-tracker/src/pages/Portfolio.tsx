@@ -4,24 +4,19 @@ import { db } from '../config/firebase';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { Github, Linkedin, ExternalLink, CheckCircle, XCircle, Plus, FileText } from 'lucide-react';
 import { verifyPortfolioItems, calculatePortfolioQualityScore } from '../utils/portfolioVerification';
+import { PortfolioItem } from '../types';
 
-interface PortfolioItem {
-  id: string;
-  title: string;
-  githubUrl: string;
-  linkedinUrl?: string;
-  description: string;
-  readme?: string;
-  skills: string[];
+interface PortfolioItemDisplay extends PortfolioItem {
   verified: boolean;
   qualityScore: number;
   createdAt: Date;
   issues?: string[];
+  readme?: string;
 }
 
 export default function Portfolio() {
   const { currentUser } = useAuth();
-  const [items, setItems] = useState<PortfolioItem[]>([]);
+  const [items, setItems] = useState<PortfolioItemDisplay[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newItem, setNewItem] = useState({
@@ -52,7 +47,7 @@ export default function Portfolio() {
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date()
-      })) as PortfolioItem[];
+      })) as PortfolioItemDisplay[];
 
       for (const item of portfolioItems) {
         if (item.githubUrl) {
@@ -68,8 +63,9 @@ export default function Portfolio() {
     }
   };
 
-  const fetchGitHubReadme = async (item: PortfolioItem) => {
+  const fetchGitHubReadme = async (item: PortfolioItemDisplay) => {
     try {
+      if (!item.githubUrl) return;
       const match = item.githubUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (!match) return;
 
@@ -93,18 +89,23 @@ export default function Portfolio() {
     setSubmitting(true);
 
     try {
-      const verification = await verifyPortfolioItems([{
-        githubUrl: newItem.githubUrl,
+      // Create a temporary portfolio item for verification
+      const tempItem: PortfolioItem = {
+        id: 'temp',
+        type: 'project',
+        title: newItem.title,
         description: newItem.description,
-        skills: newItem.skills
-      }]);
-
-      const qualityScore = calculatePortfolioQualityScore({
+        dateCreated: new Date(),
+        tags: [],
         githubUrl: newItem.githubUrl,
-        description: newItem.description,
+        linkedinUrl: newItem.linkedinUrl,
+        content: newItem.description,
         skills: newItem.skills,
-        readme: ''
-      });
+        tools: []
+      };
+
+      const verification = await verifyPortfolioItems([tempItem]);
+      const qualityScore = calculatePortfolioQualityScore(tempItem);
 
       await addDoc(collection(db, 'portfolioItems'), {
         userId: currentUser.uid,
@@ -113,9 +114,9 @@ export default function Portfolio() {
         linkedinUrl: newItem.linkedinUrl,
         description: newItem.description,
         skills: newItem.skills,
-        verified: verification.allValid,
-        qualityScore: qualityScore.totalScore,
-        issues: verification.items[0]?.issues || [],
+        verified: verification.verified.length > 0,
+        qualityScore: qualityScore,
+        issues: verification.failed[0]?.issues || [],
         createdAt: new Date()
       });
 

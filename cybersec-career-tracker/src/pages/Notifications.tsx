@@ -10,7 +10,7 @@ interface Notification {
   type: 'achievement' | 'recommendation' | 'reminder' | 'milestone' | 'readiness';
   title: string;
   message: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
   color: string;
   timestamp: Date;
   read: boolean;

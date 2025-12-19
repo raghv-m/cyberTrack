@@ -17,7 +17,7 @@ export default function DailyLog() {
   const [handsOnHours, setHandsOnHours] = useState(0);
   const [labs, setLabs] = useState<LabEntry[]>([]);
   const [tools, setTools] = useState<ToolEntry[]>([]);
-  const [showValidation, setShowValidation] = useState(false);
+  const [, setShowValidation] = useState(false);
 
   const totalHours = theoryHours + handsOnHours;
   const theoryPercent = totalHours > 0 ? (theoryHours / totalHours) * 100 : 0;

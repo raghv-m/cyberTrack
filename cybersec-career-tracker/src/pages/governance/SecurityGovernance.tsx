@@ -1,4 +1,4 @@
-import { Shield, Users, Target, AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
+import { Shield, Users, Target, TrendingUp } from 'lucide-react';
 
 export default function SecurityGovernance() {
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Upload, Calendar, AlertTriangle, Plus, X, Save } from 'lucide-react';
+import { Shield, Plus, X, Save } from 'lucide-react';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../contexts/AuthContext';
@@ -94,7 +94,7 @@ export default function IncidentReportForm() {
         lastUpdated: Timestamp.now()
       };
 
-      const docRef = await addDoc(collection(db, 'incidentReports'), reportData);
+      await addDoc(collection(db, 'incidentReports'), reportData);
       
       alert('✅ Incident report submitted successfully!');
       navigate(`/app/incident-reports`);
@@ -121,15 +121,7 @@ export default function IncidentReportForm() {
     setTimeline(newTimeline);
   };
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'Critical': return 'bg-danger';
-      case 'High': return 'bg-warning';
-      case 'Medium': return 'bg-yellow-500';
-      case 'Low': return 'bg-blue-500';
-      default: return 'bg-gray-500';
-    }
-  };
+  
 
   return (
     <div className="min-h-screen bg-primary p-6">
@@ -531,4 +523,5 @@ export default function IncidentReportForm() {
     </div>
   );
 }
+
 

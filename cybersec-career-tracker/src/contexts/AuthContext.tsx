@@ -20,7 +20,7 @@ interface AuthContextType {
   loading: boolean;
   signup: (email: string, password: string, displayName: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
+  loginWithGoogle: () => Promise<{ user: any }>;
   logout: () => Promise<void>;
 }
 
@@ -193,6 +193,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error('Failed to send login notification:', error);
       // Don't block login if email fails
     }
+
+    return { user };
   }
 
   async function logout() {

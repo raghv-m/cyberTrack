@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Cookie, ArrowLeft } from 'lucide-react';
+import { Cookie, ArrowLeft } from 'lucide-react';
 
 const CookiePolicy: React.FC = () => {
   return (

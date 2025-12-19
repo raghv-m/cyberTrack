@@ -163,9 +163,9 @@ export default function SkillsMatrix() {
     return avg.toFixed(1);
   };
 
-  const filteredSkills = selectedCategory === 'All'
-    ? Object.values(skills)
-    : Object.values(skills).filter(skill => skill.category === selectedCategory);
+  // const filteredSkills = selectedCategory === 'All'
+  //   ? Object.values(skills)
+  //   : Object.values(skills).filter(skill => skill.category === selectedCategory);
 
   if (loading) {
     return (

@@ -1,4 +1,4 @@
-import { AlertTriangle, Users, FileText, TrendingUp } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
 export default function IncidentResponse() {
   return (

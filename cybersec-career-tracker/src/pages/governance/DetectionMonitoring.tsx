@@ -1,4 +1,4 @@
-import { Activity, Database, Shield, AlertTriangle } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 export default function DetectionMonitoring() {
   return (
