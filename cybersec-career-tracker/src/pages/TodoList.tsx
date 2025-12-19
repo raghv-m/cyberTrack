@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { CheckCircle, Circle, Trash2, Plus, Target, TrendingUp } from 'lucide-react';
+import { CheckCircle, Circle, Trash2, Plus, Target, TrendingUp, ListTodo, Flame, Award } from 'lucide-react';
+import PageHeader from '../components/ui/PageHeader';
+import CyberCard from '../components/ui/CyberCard';
+import CyberButton from '../components/ui/CyberButton';
+import CyberInput from '../components/ui/CyberInput';
+import CyberTabs from '../components/ui/CyberTabs';
+import LoadingState from '../components/ui/LoadingState';
+import EmptyState from '../components/ui/EmptyState';
 
 interface Todo {
   id: string;
@@ -242,101 +249,110 @@ export default function TodoList() {
     }
   };
 
+  const [filterTab, setFilterTab] = useState('all');
+
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-text-secondary">Loading todos...</div>
-      </div>
-    );
+    return <LoadingState fullScreen message="Loading your tasks..." />;
   }
 
   const activeTodos = todos.filter(t => !t.completed);
   const completedTodos = todos.filter(t => t.completed);
+  const highPriorityTodos = activeTodos.filter(t => t.priority === 'high');
+
+  const filteredTodos = filterTab === 'all'
+    ? activeTodos
+    : filterTab === 'completed'
+    ? completedTodos
+    : activeTodos.filter(t => t.priority === filterTab);
 
   return (
-    <div className="min-h-screen bg-bg-primary p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-text-primary mb-2">Today's Tasks</h1>
-            <p className="text-text-secondary">
-              {activeTodos.length} active • {completedTodos.length} completed
-            </p>
-          </div>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-semibold hover:opacity-90 transition-smooth flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Add Task
-          </button>
-        </div>
+    <div className="min-h-screen bg-[#0B0E11] p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Page Header */}
+        <PageHeader
+          title="TODAY'S TASKS"
+          subtitle={`${activeTodos.length} active • ${completedTodos.length} completed • ${highPriorityTodos.length} high priority`}
+          icon={ListTodo}
+          primaryAction={{
+            label: 'Add Task',
+            onClick: () => setShowAddForm(!showAddForm),
+            icon: Plus
+          }}
+        />
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="glass rounded-lg p-4">
-            <div className="flex items-center gap-3">
-              <Target className="w-8 h-8 text-primary" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <CyberCard variant="blue" className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-cyber-blue/20">
+                <Target className="w-8 h-8 text-cyber-blue" />
+              </div>
               <div>
-                <p className="text-2xl font-bold text-text-primary">{activeTodos.length}</p>
-                <p className="text-sm text-text-secondary">Active Tasks</p>
+                <p className="text-3xl font-black text-white font-mono">{activeTodos.length}</p>
+                <p className="text-sm text-text-tertiary font-mono">Active Tasks</p>
               </div>
             </div>
-          </div>
-          <div className="glass rounded-lg p-4">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-8 h-8 text-success" />
+          </CyberCard>
+
+          <CyberCard variant="default" className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-cyber-green/20">
+                <CheckCircle className="w-8 h-8 text-cyber-green" />
+              </div>
               <div>
-                <p className="text-2xl font-bold text-text-primary">{completedTodos.length}</p>
-                <p className="text-sm text-text-secondary">Completed</p>
+                <p className="text-3xl font-black text-white font-mono">{completedTodos.length}</p>
+                <p className="text-sm text-text-tertiary font-mono">Completed</p>
               </div>
             </div>
-          </div>
-          <div className="glass rounded-lg p-4">
-            <div className="flex items-center gap-3">
-              <TrendingUp className="w-8 h-8 text-warning" />
+          </CyberCard>
+          <CyberCard variant="gold" className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-xl bg-cyber-gold/20">
+                <Flame className="w-8 h-8 text-cyber-gold" />
+              </div>
               <div>
-                <p className="text-2xl font-bold text-text-primary">
+                <p className="text-3xl font-black text-white font-mono">
                   {todos.length > 0 ? Math.round((completedTodos.length / todos.length) * 100) : 0}%
                 </p>
-                <p className="text-sm text-text-secondary">Completion Rate</p>
+                <p className="text-sm text-text-tertiary font-mono">Completion Rate</p>
               </div>
             </div>
-          </div>
+          </CyberCard>
         </div>
 
         {/* Add Todo Form */}
         {showAddForm && (
-          <div className="glass rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-bold text-text-primary mb-4">Add New Task</h3>
+          <CyberCard variant="blue" className="p-6 mb-8">
+            <h3 className="text-xl font-mono font-bold text-white mb-6">Add New Task</h3>
             <div className="space-y-4">
+              <CyberInput
+                label="Title"
+                value={newTodo.title}
+                onChange={(value) => setNewTodo({ ...newTodo, title: value })}
+                placeholder="Enter task title..."
+                required
+              />
+
               <div>
-                <label className="block text-text-secondary mb-2">Title</label>
-                <input
-                  type="text"
-                  value={newTodo.title}
-                  onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-bg-secondary border border-border-color rounded-lg text-text-primary"
-                  placeholder="Enter task title..."
-                />
-              </div>
-              <div>
-                <label className="block text-text-secondary mb-2">Description</label>
+                <label className="block text-sm font-mono font-medium text-text-secondary mb-2">
+                  Description
+                </label>
                 <textarea
                   value={newTodo.description}
                   onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })}
-                  className="w-full px-4 py-2 bg-bg-secondary border border-border-color rounded-lg text-text-primary"
+                  className="w-full px-4 py-2.5 bg-cyber-bg-surface/50 backdrop-blur-sm border border-cyber-blue/20 rounded-lg text-text-primary font-mono text-sm placeholder:text-text-muted focus:outline-none focus:border-cyber-blue focus:ring-2 focus:ring-cyber-blue/30 hover:border-cyber-blue/40 transition-all duration-200 ease-out"
                   rows={3}
                   placeholder="Enter task description..."
                 />
               </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-text-secondary mb-2">Priority</label>
+                  <label className="block text-sm font-mono font-medium text-text-secondary mb-2">Priority</label>
                   <select
                     value={newTodo.priority}
                     onChange={(e) => setNewTodo({ ...newTodo, priority: e.target.value as any })}
-                    className="w-full px-4 py-2 bg-bg-secondary border border-border-color rounded-lg text-text-primary"
+                    className="w-full px-4 py-2.5 bg-cyber-bg-surface/50 backdrop-blur-sm border border-cyber-blue/20 rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-cyber-blue focus:ring-2 focus:ring-cyber-blue/30 hover:border-cyber-blue/40 transition-all duration-200 ease-out"
                   >
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
@@ -344,11 +360,11 @@ export default function TodoList() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-text-secondary mb-2">Category</label>
+                  <label className="block text-sm font-mono font-medium text-text-secondary mb-2">Category</label>
                   <select
                     value={newTodo.category}
                     onChange={(e) => setNewTodo({ ...newTodo, category: e.target.value as any })}
-                    className="w-full px-4 py-2 bg-bg-secondary border border-border-color rounded-lg text-text-primary"
+                    className="w-full px-4 py-2.5 bg-cyber-bg-surface/50 backdrop-blur-sm border border-cyber-blue/20 rounded-lg text-text-primary font-mono text-sm focus:outline-none focus:border-cyber-blue focus:ring-2 focus:ring-cyber-blue/30 hover:border-cyber-blue/40 transition-all duration-200 ease-out"
                   >
                     <option value="lab">Lab</option>
                     <option value="tool">Tool</option>
@@ -358,123 +374,118 @@ export default function TodoList() {
                   </select>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={addTodo}
-                  className="flex-1 px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition-smooth"
-                >
+
+              <div className="flex gap-3 pt-2">
+                <CyberButton variant="primary" onClick={addTodo} className="flex-1">
                   Add Task
-                </button>
-                <button
-                  onClick={() => setShowAddForm(false)}
-                  className="px-6 py-2 bg-bg-tertiary text-text-secondary rounded-lg hover:bg-bg-secondary transition-smooth"
-                >
+                </CyberButton>
+                <CyberButton variant="ghost" onClick={() => setShowAddForm(false)}>
                   Cancel
-                </button>
+                </CyberButton>
               </div>
             </div>
-          </div>
+          </CyberCard>
         )}
 
-        {/* Active Todos */}
-        {activeTodos.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-text-primary mb-4">Active Tasks</h2>
-            <div className="space-y-3">
-              {activeTodos.map(todo => (
-                <div key={todo.id} className="glass rounded-lg p-4 hover:bg-bg-secondary transition-smooth">
-                  <div className="flex items-start gap-4">
-                    <button
-                      onClick={() => toggleTodo(todo.id)}
-                      className="flex-shrink-0 mt-1"
-                    >
-                      <Circle className="w-6 h-6 text-text-tertiary hover:text-primary transition-smooth" />
-                    </button>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xl">{getCategoryIcon(todo.category)}</span>
-                          <h3 className="font-semibold text-text-primary">{todo.title}</h3>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className={`text-xs font-semibold uppercase ${getPriorityColor(todo.priority)}`}>
-                            {todo.priority}
-                          </span>
-                          <button
-                            onClick={() => deleteTodo(todo.id)}
-                            className="text-text-tertiary hover:text-danger transition-smooth"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
+        {/* Filter Tabs */}
+        <CyberTabs
+          tabs={[
+            { id: 'all', label: 'All Active', icon: Target, count: activeTodos.length },
+            { id: 'high', label: 'High Priority', icon: Flame, count: highPriorityTodos.length },
+            { id: 'completed', label: 'Completed', icon: CheckCircle, count: completedTodos.length }
+          ]}
+          activeTab={filterTab}
+          onChange={setFilterTab}
+          variant="pill"
+          className="mb-8"
+        />
+
+        {/* Task List */}
+        {filteredTodos.length === 0 ? (
+          <EmptyState
+            icon={ListTodo}
+            title="No tasks found"
+            description={filterTab === 'completed' ? "You haven't completed any tasks yet. Keep working!" : "You're all caught up! Add a new task to get started."}
+            action={filterTab !== 'completed' ? {
+              label: 'Add Task',
+              onClick: () => setShowAddForm(true),
+              icon: Plus
+            } : undefined}
+          />
+        ) : (
+          <div className="space-y-4">
+            {filteredTodos.map(todo => (
+              <CyberCard key={todo.id} variant="default" className="p-5 hover:scale-[1.01] transition-transform duration-200" hoverable>
+                <div className="flex items-start gap-4">
+                  <button
+                    onClick={() => toggleTodo(todo.id)}
+                    className="flex-shrink-0 mt-1 group"
+                  >
+                    {todo.completed ? (
+                      <CheckCircle className="w-6 h-6 text-cyber-green group-hover:scale-110 transition-transform duration-200" />
+                    ) : (
+                      <Circle className="w-6 h-6 text-text-tertiary group-hover:text-cyber-blue group-hover:scale-110 transition-all duration-200" />
+                    )}
+                  </button>
+
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{getCategoryIcon(todo.category)}</span>
+                        <h3 className={`font-mono font-bold text-lg ${todo.completed ? 'line-through text-text-tertiary' : 'text-white'}`}>
+                          {todo.title}
+                        </h3>
                       </div>
-                      {todo.description && (
-                        <p className="text-sm text-text-secondary">{todo.description}</p>
-                      )}
-                      {todo.source === 'auto' && (
-                        <div className="mt-2 flex items-center gap-2">
-                          <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded">
-                            Auto-generated from Phase {todo.phaseNumber}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
-        {/* Completed Todos */}
-        {completedTodos.length > 0 && (
-          <div>
-            <h2 className="text-2xl font-bold text-text-primary mb-4">Completed Tasks</h2>
-            <div className="space-y-3">
-              {completedTodos.map(todo => (
-                <div key={todo.id} className="glass rounded-lg p-4 opacity-60">
-                  <div className="flex items-start gap-4">
-                    <button
-                      onClick={() => toggleTodo(todo.id)}
-                      className="flex-shrink-0 mt-1"
-                    >
-                      <CheckCircle className="w-6 h-6 text-success" />
-                    </button>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xl">{getCategoryIcon(todo.category)}</span>
-                          <h3 className="font-semibold text-text-primary line-through">{todo.title}</h3>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <span className={`
+                          px-2.5 py-1 rounded-md text-xs font-mono font-medium border
+                          ${todo.priority === 'high' ? 'bg-cyber-red/20 text-cyber-red border-cyber-red/30' : ''}
+                          ${todo.priority === 'medium' ? 'bg-cyber-gold/20 text-cyber-gold border-cyber-gold/30' : ''}
+                          ${todo.priority === 'low' ? 'bg-cyber-green/20 text-cyber-green border-cyber-green/30' : ''}
+                        `}>
+                          {todo.priority.toUpperCase()}
+                        </span>
+
                         <button
                           onClick={() => deleteTodo(todo.id)}
-                          className="text-text-tertiary hover:text-danger transition-smooth"
+                          className="text-text-tertiary hover:text-cyber-red hover:scale-110 transition-all duration-200"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
+
+                    {todo.description && (
+                      <p className="text-sm text-text-tertiary font-mono mb-2">{todo.description}</p>
+                    )}
+
+                    {todo.source === 'auto' && (
+                      <div className="mt-2">
+                        <span className="inline-flex items-center gap-2 text-xs px-2.5 py-1 bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/30 rounded-md font-mono">
+                          <Award className="w-3 h-3" />
+                          Auto-generated from Phase {todo.phaseNumber}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
+              </CyberCard>
+            ))}
           </div>
         )}
 
-        {todos.length === 0 && (
-          <div className="glass rounded-lg p-12 text-center">
-            <Target className="w-16 h-16 text-text-tertiary mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-text-primary mb-2">No tasks yet</h3>
-            <p className="text-text-secondary mb-6">
-              Add your first task or complete onboarding to generate tasks automatically
-            </p>
-            <button
-              onClick={() => setShowAddForm(true)}
-              className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-semibold hover:opacity-90 transition-smooth"
-            >
-              Add Your First Task
-            </button>
-          </div>
+        {todos.length === 0 && !showAddForm && (
+          <EmptyState
+            icon={ListTodo}
+            title="No tasks yet"
+            description="Add your first task or complete onboarding to generate tasks automatically from your curriculum"
+            action={{
+              label: 'Add Your First Task',
+              onClick: () => setShowAddForm(true),
+              icon: Plus
+            }}
+          />
         )}
       </div>
     </div>

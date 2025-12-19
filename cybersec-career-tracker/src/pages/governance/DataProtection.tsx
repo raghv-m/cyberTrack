@@ -1,81 +1,167 @@
-import { Database } from 'lucide-react';
+import { Database, Shield, Lock, Eye, FileCheck, Trash2, Key, ArrowRight, CheckCircle } from 'lucide-react';
+import PageHeader from '../../components/ui/PageHeader';
+import CyberCard from '../../components/ui/CyberCard';
+import FlowDiagram from '../../components/ui/FlowDiagram';
+import FlowNode from '../../components/ui/FlowNode';
 
 export default function DataProtection() {
   return (
-    <div className="min-h-screen bg-primary p-6">
+    <div className="min-h-screen bg-[#0B0E11] p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Database className="w-12 h-12 text-primary" />
-          <div>
-            <h1 className="text-4xl font-bold text-text-primary">Data Protection & Privacy</h1>
-            <p className="text-text-secondary mt-2">Data Classification, Retention, Encryption & PIPEDA Compliance</p>
-          </div>
-        </div>
+        {/* Page Header */}
+        <PageHeader
+          title="DATA PROTECTION & PRIVACY"
+          subtitle="Data Classification, Retention, Encryption & PIPEDA Compliance"
+          icon={Database}
+          badge="PIPEDA Compliant"
+          badgeColor="green"
+        />
 
-        {/* Data Classification */}
-        <div className="glass rounded-lg p-8 mb-6">
-          <h2 className="text-2xl font-bold text-primary mb-6">Data Classification Framework</h2>
-          <div className="space-y-4">
-            <div className="bg-danger/20 border-l-4 border-danger p-4 rounded">
-              <h3 className="font-semibold text-text-primary mb-2">🔴 RESTRICTED</h3>
-              <p className="text-sm text-text-secondary mb-2">PII, payment data, health records, credentials</p>
-              <p className="text-sm text-text-secondary"><strong>Controls:</strong> AES-256 encryption, MFA, access logging, annual reviews</p>
+        {/* Data Classification Flow */}
+        <CyberCard variant="blue" className="p-8 mb-8">
+          <h2 className="text-2xl font-mono font-black text-white mb-6 flex items-center gap-3">
+            <Shield className="w-7 h-7 text-cyber-blue" />
+            Data Classification Framework
+          </h2>
+
+          <p className="text-text-tertiary font-mono text-sm mb-8">
+            Visual flow: Identify Data Type → Assign Classification → Apply Controls → Review & Audit
+          </p>
+
+          {/* Classification Flow */}
+          <div className="flex items-center gap-4 mb-8 overflow-x-auto pb-4">
+            <FlowNode
+              title="Identify Data"
+              description="Scan & categorize"
+              icon={Eye}
+              status="active"
+              badge="Step 1"
+              badgeColor="blue"
+            />
+            <ArrowRight className="w-6 h-6 text-cyber-blue/50 flex-shrink-0" />
+            <FlowNode
+              title="Classify"
+              description="Assign level"
+              icon={FileCheck}
+              status="decision"
+              badge="Decision"
+              badgeColor="gold"
+            />
+            <ArrowRight className="w-6 h-6 text-cyber-blue/50 flex-shrink-0" />
+            <FlowNode
+              title="Apply Controls"
+              description="Encryption, access"
+              icon={Lock}
+              status="active"
+              badge="Step 2"
+              badgeColor="blue"
+            />
+            <ArrowRight className="w-6 h-6 text-cyber-blue/50 flex-shrink-0" />
+            <FlowNode
+              title="Monitor & Audit"
+              description="Continuous review"
+              icon={CheckCircle}
+              status="completed"
+              badge="Ongoing"
+              badgeColor="green"
+            />
+          </div>
+
+          {/* Classification Levels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-lg bg-cyber-red/10 border-2 border-cyber-red/30 hover:border-cyber-red hover:shadow-[0_0_20px_rgba(255,51,102,0.3)] transition-all duration-200">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-cyber-red shadow-[0_0_10px_rgba(255,51,102,0.8)]" />
+                <h3 className="font-mono font-bold text-cyber-red">RESTRICTED</h3>
+              </div>
+              <p className="text-xs text-text-tertiary font-mono mb-3">PII, payment data, health records, credentials</p>
+              <div className="space-y-1 text-xs font-mono text-text-secondary">
+                <p>• AES-256 encryption</p>
+                <p>• MFA required</p>
+                <p>• Access logging</p>
+                <p>• Annual reviews</p>
+              </div>
             </div>
-            <div className="bg-warning/20 border-l-4 border-warning p-4 rounded">
-              <h3 className="font-semibold text-text-primary mb-2">🟡 CONFIDENTIAL</h3>
-              <p className="text-sm text-text-secondary mb-2">Financial reports, contracts, strategic plans</p>
-              <p className="text-sm text-text-secondary"><strong>Controls:</strong> Encryption in transit, restricted access, quarterly reviews</p>
+
+            <div className="p-5 rounded-lg bg-cyber-gold/10 border-2 border-cyber-gold/30 hover:border-cyber-gold hover:shadow-neon-gold-sm transition-all duration-200">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-cyber-gold shadow-neon-gold-sm" />
+                <h3 className="font-mono font-bold text-cyber-gold">CONFIDENTIAL</h3>
+              </div>
+              <p className="text-xs text-text-tertiary font-mono mb-3">Financial reports, contracts, strategic plans</p>
+              <div className="space-y-1 text-xs font-mono text-text-secondary">
+                <p>• Encryption in transit</p>
+                <p>• Restricted access</p>
+                <p>• Quarterly reviews</p>
+              </div>
             </div>
-            <div className="bg-blue-500/20 border-l-4 border-blue-500 p-4 rounded">
-              <h3 className="font-semibold text-text-primary mb-2">🔵 INTERNAL</h3>
-              <p className="text-sm text-text-secondary mb-2">Policies, employee directory, meeting notes</p>
-              <p className="text-sm text-text-secondary"><strong>Controls:</strong> Employee-only access, TLS recommended</p>
+
+            <div className="p-5 rounded-lg bg-cyber-blue/10 border-2 border-cyber-blue/30 hover:border-cyber-blue hover:shadow-neon-blue-sm transition-all duration-200">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-cyber-blue shadow-neon-blue-sm" />
+                <h3 className="font-mono font-bold text-cyber-blue">INTERNAL</h3>
+              </div>
+              <p className="text-xs text-text-tertiary font-mono mb-3">Policies, employee directory, meeting notes</p>
+              <div className="space-y-1 text-xs font-mono text-text-secondary">
+                <p>• Employee-only access</p>
+                <p>• TLS recommended</p>
+              </div>
             </div>
-            <div className="bg-success/20 border-l-4 border-success p-4 rounded">
-              <h3 className="font-semibold text-text-primary mb-2">🟢 PUBLIC</h3>
-              <p className="text-sm text-text-secondary mb-2">Marketing materials, press releases, public website</p>
-              <p className="text-sm text-text-secondary"><strong>Controls:</strong> No special controls required</p>
+
+            <div className="p-5 rounded-lg bg-cyber-green/10 border-2 border-cyber-green/30 hover:border-cyber-green hover:shadow-[0_0_20px_rgba(0,255,136,0.3)] transition-all duration-200">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-cyber-green shadow-[0_0_10px_rgba(0,255,136,0.8)]" />
+                <h3 className="font-mono font-bold text-cyber-green">PUBLIC</h3>
+              </div>
+              <p className="text-xs text-text-tertiary font-mono mb-3">Marketing materials, press releases, public website</p>
+              <div className="space-y-1 text-xs font-mono text-text-secondary">
+                <p>• No special controls</p>
+              </div>
             </div>
           </div>
-        </div>
+        </CyberCard>
 
         {/* Data Retention */}
-        <div className="glass rounded-lg p-8 mb-6">
-          <h2 className="text-2xl font-bold text-primary mb-6">Data Retention & Disposal</h2>
+        <CyberCard variant="default" className="p-8 mb-8">
+          <h2 className="text-2xl font-mono font-black text-white mb-6 flex items-center gap-3">
+            <Trash2 className="w-7 h-7 text-cyber-gold" />
+            Data Retention & Disposal
+          </h2>
+
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm">
+            <table className="w-full text-left border-collapse text-sm font-mono">
               <thead>
-                <tr className="bg-tertiary">
-                  <th className="p-3 border border-border-color text-text-primary">Data Type</th>
-                  <th className="p-3 border border-border-color text-text-primary">Retention Period</th>
-                  <th className="p-3 border border-border-color text-text-primary">Disposal Method</th>
+                <tr className="bg-cyber-bg-elevated border-b-2 border-cyber-blue/30">
+                  <th className="p-4 text-cyber-blue font-bold">Data Type</th>
+                  <th className="p-4 text-cyber-blue font-bold">Retention Period</th>
+                  <th className="p-4 text-cyber-blue font-bold">Disposal Method</th>
                 </tr>
               </thead>
-              <tbody className="text-text-secondary">
-                <tr>
-                  <td className="p-3 border border-border-color">Customer PII</td>
-                  <td className="p-3 border border-border-color">2 years after account closure</td>
-                  <td className="p-3 border border-border-color">Secure wipe (DoD 5220.22-M)</td>
+              <tbody className="text-text-tertiary">
+                <tr className="border-b border-cyber-blue/10 hover:bg-cyber-bg-elevated/50 transition-colors duration-150">
+                  <td className="p-4 text-white">Customer PII</td>
+                  <td className="p-4">2 years after account closure</td>
+                  <td className="p-4">Secure wipe (DoD 5220.22-M)</td>
                 </tr>
-                <tr className="bg-secondary/30">
-                  <td className="p-3 border border-border-color">Financial records</td>
-                  <td className="p-3 border border-border-color">7 years (tax compliance)</td>
-                  <td className="p-3 border border-border-color">Secure deletion + audit log</td>
+                <tr className="border-b border-cyber-blue/10 hover:bg-cyber-bg-elevated/50 transition-colors duration-150">
+                  <td className="p-4 text-white">Financial records</td>
+                  <td className="p-4">7 years (tax compliance)</td>
+                  <td className="p-4">Secure deletion + audit log</td>
                 </tr>
-                <tr>
-                  <td className="p-3 border border-border-color">Security logs</td>
-                  <td className="p-3 border border-border-color">1 year online, 7 years archive</td>
-                  <td className="p-3 border border-border-color">Automated deletion after retention</td>
+                <tr className="border-b border-cyber-blue/10 hover:bg-cyber-bg-elevated/50 transition-colors duration-150">
+                  <td className="p-4 text-white">Security logs</td>
+                  <td className="p-4">1 year online, 7 years archive</td>
+                  <td className="p-4">Automated deletion after retention</td>
                 </tr>
-                <tr className="bg-secondary/30">
-                  <td className="p-3 border border-border-color">Employee records</td>
-                  <td className="p-3 border border-border-color">7 years after termination</td>
-                  <td className="p-3 border border-border-color">Secure shredding (paper) / wipe (digital)</td>
+                <tr className="border-b border-cyber-blue/10 hover:bg-cyber-bg-elevated/50 transition-colors duration-150">
+                  <td className="p-4 text-white">Employee records</td>
+                  <td className="p-4">7 years after termination</td>
+                  <td className="p-4">Secure shredding (paper) / wipe (digital)</td>
                 </tr>
-                <tr>
-                  <td className="p-3 border border-border-color">Backup data</td>
-                  <td className="p-3 border border-border-color">90 days (incremental), 1 year (full)</td>
-                  <td className="p-3 border border-border-color">Overwrite backup media</td>
+                <tr className="hover:bg-cyber-bg-elevated/50 transition-colors duration-150">
+                  <td className="p-4 text-white">Backup data</td>
+                  <td className="p-4">90 days (incremental), 1 year (full)</td>
+                  <td className="p-4">Overwrite backup media</td>
                 </tr>
               </tbody>
             </table>
