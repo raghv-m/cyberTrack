@@ -2,7 +2,7 @@ import { Shield, Lock } from 'lucide-react';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-primary p-6">
+    <div className="min-h-screen bg-bg-primary p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">

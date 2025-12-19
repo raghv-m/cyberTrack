@@ -35,21 +35,30 @@ export default function LearningPlatforms() {
   const filteredPlatforms = selectedCategory === 'all' ? PLATFORMS : PLATFORMS.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-bg-primary p-6">
+    <div className="min-h-screen bg-[#0B0E11] p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-text-primary mb-2">Learning Platforms</h1>
-        <p className="text-text-secondary mb-8">All resources for your cybersecurity curriculum</p>
-        
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-black text-white mb-2 tracking-tight" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            LEARNING PLATFORMS // HEX-TILES
+          </h1>
+          <p className="text-gray-400 text-sm" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+            All resources for your cybersecurity curriculum • Connection Status: Online
+          </p>
+        </div>
+
+        {/* Category Filter Buttons */}
         <div className="flex flex-wrap gap-3 mb-8">
           {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-smooth flex items-center gap-2 ${
+              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
                 selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                  : 'bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
+                  ? 'bg-cyber-blue/20 border-2 border-cyber-blue/50 text-cyber-blue shadow-[0_0_20px_rgba(0,163,255,0.3)]'
+                  : 'bg-[#161B22]/60 border border-gray-700 text-gray-400 hover:bg-[#161B22] hover:border-cyber-blue/30'
               }`}
+              style={{ fontFamily: 'JetBrains Mono, monospace' }}
             >
               <cat.icon className="w-5 h-5" />
               {cat.name}
@@ -57,32 +66,74 @@ export default function LearningPlatforms() {
           ))}
         </div>
 
+        {/* Hexagonal Grid of Platform Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPlatforms.map((platform, index) => (
-            <div key={index} className="glass rounded-lg p-6 hover:bg-bg-secondary transition-smooth">
+            <div key={index} className="relative group">
+              {/* Hex-Tile Glow Effect */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-300"></div>
+
+              {/* Hex-Tile Card */}
+              <div
+                className="relative bg-[#161B22]/60 backdrop-blur-xl border-2 border-cyber-blue/30 rounded-2xl p-6 hover:border-cyber-blue/60 transition-all duration-300 shadow-[0_0_30px_rgba(0,163,255,0.1)] group-hover:shadow-[0_0_40px_rgba(0,163,255,0.3)]"
+                style={{
+                  clipPath: 'polygon(0 10%, 10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%)'
+                }}
+              >
               {platform.recommended && (
                 <div className="flex items-center gap-2 mb-3">
-                  <Star className="w-4 h-4 text-warning fill-warning" />
-                  <span className="text-xs font-semibold text-warning uppercase">Recommended</span>
+                  <Star className="w-4 h-4 text-cyber-gold fill-cyber-gold drop-shadow-[0_0_6px_rgba(255,184,0,0.8)]" />
+                  <span className="text-xs font-bold text-cyber-gold uppercase" style={{ fontFamily: 'JetBrains Mono, monospace' }}>Recommended</span>
                 </div>
               )}
-              <h3 className="text-xl font-bold text-text-primary mb-2">{platform.name}</h3>
-              <p className="text-sm text-text-tertiary mb-3">{platform.difficulty}</p>
-              <p className="text-text-secondary text-sm mb-4">{platform.description}</p>
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm">
-                  <DollarSign className="w-4 h-4 text-success" />
-                  <span className="text-text-secondary">{platform.cost}</span>
+                {/* Platform Name */}
+                <h3 className="text-xl font-black text-white mb-2" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                  {platform.name.toUpperCase()}
+                </h3>
+
+                {/* Difficulty Badge */}
+                <div className="inline-block px-3 py-1 bg-cyber-purple/20 border border-cyber-purple/40 rounded-full mb-3">
+                  <span className="text-xs font-bold text-cyber-purple" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    {platform.difficulty.toUpperCase()}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Target className="w-4 h-4 text-primary" />
-                  <span className="text-text-secondary">{platform.focus}</span>
+
+                {/* Description */}
+                <p className="text-gray-400 text-sm mb-4" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                  {platform.description}
+                </p>
+
+                {/* Platform Details */}
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <DollarSign className="w-4 h-4 text-cyber-green" />
+                    <span className="text-gray-300" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{platform.cost}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Target className="w-4 h-4 text-cyber-blue" />
+                    <span className="text-gray-300" style={{ fontFamily: 'JetBrains Mono, monospace' }}>{platform.focus}</span>
+                  </div>
                 </div>
+
+                {/* Connection Status Indicator */}
+                <div className="flex items-center gap-2 mb-4 text-xs">
+                  <div className="w-2 h-2 rounded-full bg-cyber-green shadow-[0_0_8px_rgba(0,255,136,0.8)] animate-pulse"></div>
+                  <span className="text-cyber-green font-bold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    CONNECTION STATUS: ONLINE
+                  </span>
+                </div>
+
+                {/* Visit Button */}
+                <a
+                  href={platform.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full px-4 py-3 bg-cyber-blue/10 border-2 border-cyber-blue/40 text-cyber-blue rounded-lg font-bold hover:bg-cyber-blue/20 hover:border-cyber-blue/60 transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,163,255,0.2)] hover:shadow-[0_0_25px_rgba(0,163,255,0.4)]"
+                  style={{ fontFamily: 'JetBrains Mono, monospace' }}
+                >
+                  VISIT PLATFORM <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
-              <a href={platform.url} target="_blank" rel="noopener noreferrer"
-                className="w-full px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-semibold hover:opacity-90 transition-smooth flex items-center justify-center gap-2">
-                Visit Platform <ExternalLink className="w-4 h-4" />
-              </a>
             </div>
           ))}
         </div>

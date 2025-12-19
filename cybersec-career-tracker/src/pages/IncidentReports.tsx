@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Shield, Plus, Clock, CheckCircle, XCircle, AlertTriangle, FileText } from 'lucide-react';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -21,6 +21,41 @@ export default function IncidentReports() {
   const [reports, setReports] = useState<IncidentReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Digital Rain Effect
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = '01アイウエオカキクケコサシスセソタチツテト';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops: number[] = Array(Math.floor(columns)).fill(1);
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(11, 14, 17, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(0, 255, 136, 0.05)';
+      ctx.font = fontSize + 'px monospace';
+
+      drops.forEach((y, i) => {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, y * fontSize);
+        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      });
+    };
+
+    const interval = setInterval(draw, 33);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     loadReports();
@@ -109,20 +144,34 @@ export default function IncidentReports() {
   };
 
   return (
-    <div className="min-h-screen bg-primary p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
+    <div className="min-h-screen bg-[#0B0E11] p-6 lg:p-8 relative overflow-hidden">
+      {/* Digital Rain Background Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+        style={{ opacity: 0.05 }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Forensic Dossier Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Shield className="w-12 h-12 text-primary" />
+            <div className="w-16 h-16 rounded-lg bg-cyber-blue/10 border-2 border-cyber-blue/30 flex items-center justify-center shadow-[0_0_20px_rgba(0,163,255,0.3)]">
+              <Shield className="w-8 h-8 text-cyber-blue drop-shadow-[0_0_8px_rgba(0,163,255,0.8)]" />
+            </div>
             <div>
-              <h1 className="text-4xl font-bold text-text-primary">Incident Reports</h1>
-              <p className="text-text-secondary mt-2">Document and track your security investigations</p>
+              <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                INCIDENT REPORTS // FORENSIC DOSSIER
+              </h1>
+              <p className="text-gray-400 mt-2 text-sm" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                Document and track your security investigations • Terminal logs enabled
+              </p>
             </div>
           </div>
           <button
             onClick={() => navigate('/app/incident-report-form')}
-            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 px-6 py-3 bg-cyber-blue/10 border-2 border-cyber-blue/40 text-cyber-blue rounded-lg hover:bg-cyber-blue/20 hover:border-cyber-blue/60 transition-all duration-300 font-bold shadow-[0_0_15px_rgba(0,163,255,0.2)]"
+            style={{ fontFamily: 'JetBrains Mono, monospace' }}
           >
             <Plus className="w-5 h-5" />
             New Report
@@ -198,32 +247,51 @@ export default function IncidentReports() {
             {filteredReports.map((report) => (
               <div
                 key={report.id}
-                className="glass rounded-lg p-6 hover:border-primary transition-colors cursor-pointer"
-                onClick={() => navigate(`/app/incident-report/${report.id}`)}
+                className="relative group"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-text-primary">{report.incidentTitle}</h3>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getSeverityColor(report.severity)}`}>
-                        {report.severity}
-                      </span>
+                {/* Glow Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-2xl opacity-10 group-hover:opacity-20 blur transition duration-300"></div>
+
+                {/* Forensic Dossier Card */}
+                <div
+                  className="relative bg-[#161B22]/60 backdrop-blur-xl border border-cyber-blue/30 rounded-2xl p-6 hover:border-cyber-blue/60 transition-all duration-300 cursor-pointer shadow-[0_0_30px_rgba(0,163,255,0.1)]"
+                  onClick={() => navigate(`/app/incident-report/${report.id}`)}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      {/* Terminal-style Header */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-xl font-black text-white" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                          {report.incidentTitle.toUpperCase()}
+                        </h3>
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold border ${getSeverityColor(report.severity)}`} style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                          {report.severity.toUpperCase()}
+                        </span>
+                      </div>
+
+                      {/* Monospace Summary */}
+                      <p className="text-gray-400 mb-4 line-clamp-2 text-sm" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                        {report.summary}
+                      </p>
+
+                      {/* Terminal Metadata */}
+                      <div className="flex items-center gap-4 text-xs text-gray-500" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                        <span className="flex items-center gap-1">
+                          <FileText className="w-3 h-3" />
+                          TYPE: {report.incidentType.toUpperCase()}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          DATE: {report.submittedAt?.toDate?.()?.toLocaleDateString() || 'N/A'}
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-text-secondary mb-3 line-clamp-2">{report.summary}</p>
-                    <div className="flex items-center gap-4 text-sm text-text-secondary">
-                      <span className="flex items-center gap-1">
-                        <FileText className="w-4 h-4" />
-                        {report.incidentType}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {report.submittedAt?.toDate?.()?.toLocaleDateString() || 'N/A'}
-                      </span>
+
+                    {/* Status Badge */}
+                    <div className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${getStatusColor(report.status)}`} style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                      {getStatusIcon(report.status)}
+                      <span className="font-semibold capitalize">{report.status.replace('_', ' ')}</span>
                     </div>
-                  </div>
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${getStatusColor(report.status)}`}>
-                    {getStatusIcon(report.status)}
-                    <span className="font-semibold capitalize">{report.status.replace('_', ' ')}</span>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
-import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { Target, TrendingUp, Award, Filter } from 'lucide-react';
 
 interface Skill {
@@ -149,8 +149,16 @@ export default function SkillsMatrix() {
     return 'bg-success';
   };
 
+  const calculateAverageProficiency = () => {
+    const skillValues = Object.values(skills);
+    if (skillValues.length === 0) return '0.0';
+    const sum = skillValues.reduce((acc, skill) => acc + skill.proficiency, 0);
+    return (sum / skillValues.length).toFixed(1);
+  };
+
   const getCategoryStats = (category: string) => {
     const categorySkills = Object.values(skills).filter(s => s.category === category);
+    if (categorySkills.length === 0) return '0.0';
     const avg = categorySkills.reduce((sum, s) => sum + s.proficiency, 0) / categorySkills.length;
     return avg.toFixed(1);
   };
@@ -316,11 +324,3 @@ export default function SkillsMatrix() {
     </div>
   );
 }
-
-  const calculateAverageProficiency = () => {
-    const skillValues = Object.values(skills);
-    if (skillValues.length === 0) return 0;
-    const sum = skillValues.reduce((acc, skill) => acc + skill.proficiency, 0);
-    return (sum / skillValues.length).toFixed(1);
-  };
-

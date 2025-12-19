@@ -95,11 +95,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function login(email: string, password: string) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    
+
     // Update last login
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       lastLogin: serverTimestamp()
     }, { merge: true });
+
+    // Send login notification email
+    try {
+      await fetch('http://localhost:3001/send-login-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: userCredential.user.email,
+          displayName: userCredential.user.displayName || 'User',
+          loginTime: new Date().toISOString(),
+          device: navigator.userAgent,
+          ipAddress: 'Unknown' // Would need external service for real IP
+        })
+      });
+    } catch (error) {
+      console.error('Failed to send login notification:', error);
+      // Don't block login if email fails
+    }
   }
 
   async function loginWithGoogle() {
@@ -157,9 +175,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         lastLogin: serverTimestamp()
       }, { merge: true });
     }
+
+    // Send login notification email
+    try {
+      await fetch('http://localhost:3001/send-login-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          displayName: user.displayName || 'User',
+          loginTime: new Date().toISOString(),
+          device: navigator.userAgent,
+          ipAddress: 'Unknown' // Would need external service for real IP
+        })
+      });
+    } catch (error) {
+      console.error('Failed to send login notification:', error);
+      // Don't block login if email fails
+    }
   }
 
   async function logout() {
+    // Clear email verification banner dismissal on logout
+    localStorage.removeItem('emailVerificationBannerDismissed');
     await firebaseSignOut(auth);
   }
 
