@@ -33,6 +33,8 @@ import SOCOperations from './pages/governance/SOCOperations'
 import DetectionMonitoring from './pages/governance/DetectionMonitoring'
 import DataProtection from './pages/governance/DataProtection'
 import CloudSecurity from './pages/governance/CloudSecurity'
+import Certifications from './pages/Certifications'
+import TierRoles from './pages/TierRoles'
 import NotFound from './pages/NotFound'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -83,6 +85,8 @@ function AppRoutes() {
         <Route path="daily-log" element={<DailyLog />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="skills" element={<SkillsMatrix />} />
+        <Route path="certifications" element={<Certifications />} />
+        <Route path="tier-roles" element={<TierRoles />} />
         <Route path="todos" element={<TodoList />} />
         <Route path="platforms" element={<LearningPlatforms />} />
         <Route path="resources" element={<Resources />} />

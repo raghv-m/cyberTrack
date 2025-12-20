@@ -23,7 +23,8 @@ import {
   Activity,
   Database,
   Cloud,
-  Award
+  Award,
+  Users
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -43,6 +44,7 @@ export default function Layout() {
     { name: 'Roadmap', href: '/app/roadmap', icon: Target },
     { name: 'Skills Matrix', href: '/app/skills', icon: Grid3x3 },
     { name: 'Certifications', href: '/app/certifications', icon: Award },
+    { name: 'Tier Roles', href: '/app/tier-roles', icon: Users },
     { name: 'Learning Platforms', href: '/app/platforms', icon: Globe },
     { name: 'Study Resources', href: '/app/resources', icon: FileText },
     { name: 'Cyber News', href: '/app/news', icon: Newspaper },
