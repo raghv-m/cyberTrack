@@ -1,5 +1,6 @@
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, getDoc, orderBy, limit } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { sendEmail, generateWeeklySummaryEmail, generateMilestoneEmail, generateWelcomeEmail, generateLoginNotificationEmail, generateLogoutNotificationEmail, generateMonthlyProgressEmail } from './emailService';
 
 interface EmailConfig {
   to: string;
@@ -94,6 +95,129 @@ export async function prepareDailyReminderEmails(): Promise<EmailConfig[]> {
   }
   
   return emails;
+}
+
+// Send welcome email to new users
+export async function sendWelcomeEmail(userEmail: string, userName: string, userId: string): Promise<boolean> {
+  try {
+    const html = generateWelcomeEmail(userName, userEmail);
+    
+    const emailData = {
+      to: userEmail,
+      subject: `🚀 Welcome to CyberPath Pro, ${userName}!`,
+      html: html
+    };
+    
+    // Save to email log
+    await saveEmailLog(userId, 'welcome', emailData);
+    
+    // Send email
+    return await sendEmail(emailData);
+  } catch (error) {
+    console.error('Error sending welcome email:', error);
+    return false;
+  }
+}
+
+// Send login notification
+export async function sendLoginNotification(userEmail: string, userName: string, userId: string, ipAddress: string): Promise<boolean> {
+  try {
+    const loginTime = new Date().toLocaleString();
+    const html = generateLoginNotificationEmail(userName, loginTime, ipAddress);
+    
+    const emailData = {
+      to: userEmail,
+      subject: `🔒 New Login to Your CyberPath Pro Account`,
+      html: html
+    };
+    
+    // Save to email log
+    await saveEmailLog(userId, 'login', emailData);
+    
+    // Send email
+    return await sendEmail(emailData);
+  } catch (error) {
+    console.error('Error sending login notification:', error);
+    return false;
+  }
+}
+
+// Send logout notification
+export async function sendLogoutNotification(userEmail: string, userName: string, userId: string): Promise<boolean> {
+  try {
+    const logoutTime = new Date().toLocaleString();
+    const html = generateLogoutNotificationEmail(userName, logoutTime);
+    
+    const emailData = {
+      to: userEmail,
+      subject: `👋 Your CyberPath Pro Session Has Ended`,
+      html: html
+    };
+    
+    // Save to email log
+    await saveEmailLog(userId, 'logout', emailData);
+    
+    // Send email
+    return await sendEmail(emailData);
+  } catch (error) {
+    console.error('Error sending logout notification:', error);
+    return false;
+  }
+}
+
+// Send weekly summary email
+export async function sendWeeklySummaryEmail(userEmail: string, userName: string, userId: string, stats: any): Promise<boolean> {
+  try {
+    const html = generateWeeklySummaryEmail(userName, stats);
+    
+    const emailData = {
+      to: userEmail,
+      subject: `📊 Your Weekly Cybersecurity Progress Report`,
+      html: html
+    };
+    
+    // Save to email log
+    await saveEmailLog(userId, 'weekly_summary', emailData);
+    
+    // Send email
+    return await sendEmail(emailData);
+  } catch (error) {
+    console.error('Error sending weekly summary email:', error);
+    return false;
+  }
+}
+
+// Send monthly progress email
+export async function sendMonthlyProgressEmail(userEmail: string, userName: string, userId: string, stats: any): Promise<boolean> {
+  try {
+    const html = generateMonthlyProgressEmail(userName, stats);
+    
+    const emailData = {
+      to: userEmail,
+      subject: `📈 Your Monthly Cybersecurity Journey Recap`,
+      html: html
+    };
+    
+    // Save to email log
+    await saveEmailLog(userId, 'monthly_progress', emailData);
+    
+    // Send email
+    return await sendEmail(emailData);
+  } catch (error) {
+    console.error('Error sending monthly progress email:', error);
+    return false;
+  }
+}
+
+// Save email log to Firestore
+async function saveEmailLog(userId: string, type: string, emailData: EmailConfig): Promise<void> {
+  try {
+    // In a real implementation, you would save this to Firestore
+    // For now, we'll just log it
+    console.log(`Email log saved for user ${userId}, type: ${type}`);
+  } catch (error) {
+    console.error('Error saving email log:', error);
+  }
 }
 
 function generateDailyReminderEmail(

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { Target, TrendingUp, Award, Filter } from 'lucide-react';
+import { Target, TrendingUp, Award, Filter, Sparkles, Lightbulb, BookOpen, Trophy, Info } from 'lucide-react';
+import { analyzeSkills } from '../services/openaiService';
 
 interface Skill {
   name: string;
@@ -46,6 +47,9 @@ export default function SkillsMatrix() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -163,6 +167,69 @@ export default function SkillsMatrix() {
     return avg.toFixed(1);
   };
 
+  const analyzeSkillsWithAI = async () => {
+    if (!currentUser) return;
+    
+    setAnalyzing(true);
+    try {
+      const analysis = await analyzeSkills(skills);
+      setAiAnalysis(analysis);
+      setShowRecommendations(true);
+    } catch (error) {
+      console.error('Error analyzing skills with AI:', error);
+      setError('Failed to analyze skills with AI. Please try again.');
+    } finally {
+      setAnalyzing(false);
+    }
+  };
+
+  const getTopSkills = () => {
+    return Object.entries(skills)
+      .sort(([,a], [,b]) => b.proficiency - a.proficiency)
+      .slice(0, 5)
+      .map(([name, skill]) => ({ name, proficiency: skill.proficiency }));
+  };
+
+  const getWeakSkills = () => {
+    return Object.entries(skills)
+      .filter(([,skill]) => skill.proficiency < 3)
+      .sort(([,a], [,b]) => a.proficiency - b.proficiency)
+      .slice(0, 5)
+      .map(([name, skill]) => ({ name, proficiency: skill.proficiency }));
+  };
+
+  const getOverallLevel = () => {
+    const avg = parseFloat(calculateAverageProficiency());
+    if (avg >= 4.5) return 'Expert';
+    if (avg >= 3.5) return 'Advanced';
+    if (avg >= 2.5) return 'Intermediate';
+    if (avg >= 1.5) return 'Beginner';
+    return 'Novice';
+  };
+
+  const getNextMilestone = () => {
+    const expertSkills = Object.values(skills).filter(s => s.proficiency === 5).length;
+    const advancedSkills = Object.values(skills).filter(s => s.proficiency === 4).length;
+    const totalSkills = Object.keys(skills).length;
+    
+    if (expertSkills >= totalSkills * 0.3) return 'Cybersecurity Specialist';
+    if (advancedSkills >= totalSkills * 0.4) return 'SOC Tier 2 Analyst';
+    if (expertSkills + advancedSkills >= totalSkills * 0.3) return 'SOC Tier 1 Analyst';
+    return 'Continue Building Foundations';
+  };
+
+  const getRecommendedCertifications = () => {
+    const avgProficiency = parseFloat(calculateAverageProficiency());
+    
+    if (avgProficiency >= 4.0) {
+      return ['OSCP', 'GIAC Certifications', 'CISSP'];
+    } else if (avgProficiency >= 3.0) {
+      return ['CompTIA Security+', 'CEH', 'BTL2'];
+    } else {
+      return ['Google Cybersecurity Certificate', 'CompTIA Network+', 'Introduction to Cybersecurity'];
+    }
+  };
+
   // const filteredSkills = selectedCategory === 'All'
   //   ? Object.values(skills)
   //   : Object.values(skills).filter(skill => skill.category === selectedCategory);
@@ -182,8 +249,20 @@ export default function SkillsMatrix() {
     <div className="p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary mb-2">Skills Matrix</h1>
-          <p className="text-text-secondary">Track your proficiency across all cybersecurity skills</p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-text-primary mb-2">Skills Matrix</h1>
+              <p className="text-text-secondary">Track your proficiency across all cybersecurity skills</p>
+            </div>
+            <button
+              onClick={analyzeSkillsWithAI}
+              disabled={analyzing}
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-all duration-200 disabled:opacity-50"
+            >
+              <Sparkles className="w-5 h-5" />
+              {analyzing ? 'Analyzing...' : 'AI Analysis'}
+            </button>
+          </div>
         </div>
 
         {/* Error Message */}
@@ -191,6 +270,108 @@ export default function SkillsMatrix() {
           <div className="mb-6 bg-warning bg-opacity-10 border border-warning rounded-lg p-4 text-warning">
             <p className="font-semibold">⚠️ {error}</p>
             <p className="text-sm mt-1">Don't worry - we've initialized your skills matrix with default values. You can start tracking now!</p>
+          </div>
+        )}
+
+        {/* AI Recommendations Panel */}
+        {showRecommendations && aiAnalysis && (
+          <div className="mb-8 glass rounded-lg p-6 border-l-4 border-primary">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-primary" />
+                <h2 className="text-xl font-bold text-text-primary">AI-Powered Insights</h2>
+              </div>
+              <button 
+                onClick={() => setShowRecommendations(false)}
+                className="text-text-secondary hover:text-text-primary"
+              >
+                Close
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Overall Assessment */}
+              <div className="bg-bg-secondary rounded-lg p-4">
+                <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-primary" />
+                  Overall Assessment
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Proficiency Level:</span>
+                    <span className="font-semibold text-primary">{getOverallLevel()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Next Milestone:</span>
+                    <span className="font-semibold text-success">{getNextMilestone()}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Strengths */}
+              <div className="bg-bg-secondary rounded-lg p-4">
+                <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-success" />
+                  Key Strengths
+                </h3>
+                <ul className="space-y-1">
+                  {aiAnalysis.strengths.slice(0, 3).map((strength: string, index: number) => (
+                    <li key={index} className="text-sm text-text-secondary flex items-center gap-2">
+                      <span className="w-2 h-2 bg-success rounded-full"></span>
+                      {strength}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* Improvement Areas */}
+              <div className="bg-bg-secondary rounded-lg p-4">
+                <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5 text-warning" />
+                  Areas to Improve
+                </h3>
+                <ul className="space-y-1">
+                  {aiAnalysis.weaknesses.slice(0, 3).map((weakness: string, index: number) => (
+                    <li key={index} className="text-sm text-text-secondary flex items-center gap-2">
+                      <span className="w-2 h-2 bg-warning rounded-full"></span>
+                      {weakness}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* Recommended Resources */}
+              <div className="bg-bg-secondary rounded-lg p-4">
+                <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-info" />
+                  Recommended Certifications
+                </h3>
+                <ul className="space-y-1">
+                  {getRecommendedCertifications().map((cert, index) => (
+                    <li key={index} className="text-sm text-text-secondary flex items-center gap-2">
+                      <span className="w-2 h-2 bg-info rounded-full"></span>
+                      {cert}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            
+            {/* AI Recommendations */}
+            <div className="mt-6 bg-primary/10 rounded-lg p-4 border border-primary/30">
+              <h3 className="font-semibold text-primary mb-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                AI Recommendations
+              </h3>
+              <ul className="space-y-2">
+                {aiAnalysis.recommendedNextSteps.map((recommendation: string, index: number) => (
+                  <li key={index} className="text-sm text-text-primary flex items-start gap-2">
+                    <span className="mt-1 text-primary">•</span>
+                    {recommendation}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
 

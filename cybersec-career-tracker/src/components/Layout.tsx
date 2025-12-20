@@ -22,7 +22,8 @@ import {
   AlertTriangle,
   Activity,
   Database,
-  Cloud
+  Cloud,
+  Award
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -41,6 +42,7 @@ export default function Layout() {
     { name: "Today's Tasks", href: '/app/todos', icon: CheckSquare },
     { name: 'Roadmap', href: '/app/roadmap', icon: Target },
     { name: 'Skills Matrix', href: '/app/skills', icon: Grid3x3 },
+    { name: 'Certifications', href: '/app/certifications', icon: Award },
     { name: 'Learning Platforms', href: '/app/platforms', icon: Globe },
     { name: 'Study Resources', href: '/app/resources', icon: FileText },
     { name: 'Cyber News', href: '/app/news', icon: Newspaper },
@@ -84,7 +86,7 @@ export default function Layout() {
 
       {/* Sidebar - Futuristic Glassmorphic Cyberpunk */}
       <aside className={`
-        fixed top-0 left-0 z-50 h-full w-72
+        fixed top-0 left-0 z-50 h-full w-64 sm:w-72
         bg-[#0B0E11]/80 backdrop-blur-xl
         border-r border-cyber-blue/20
         shadow-[0_0_30px_rgba(0,163,255,0.1)]
@@ -105,20 +107,20 @@ export default function Layout() {
           {/* Logo - Cyber HUD Style */}
           <div className="p-6 border-b border-cyber-blue/20 relative">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className="relative">
-                  <Shield className="w-9 h-9 text-cyber-blue drop-shadow-[0_0_8px_rgba(0,163,255,0.6)]" />
+                  <Shield className="w-8 h-8 sm:w-9 sm:h-9 text-cyber-blue drop-shadow-[0_0_8px_rgba(0,163,255,0.6)]" />
                   <div className="absolute inset-0 animate-ping opacity-20">
-                    <Shield className="w-9 h-9 text-cyber-blue" />
+                    <Shield className="w-8 h-8 sm:w-9 sm:h-9 text-cyber-blue" />
                   </div>
                 </div>
                 <div>
-                  <span className="text-xl font-black text-white tracking-wider" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                  <span className="text-lg sm:text-xl font-black text-white tracking-wider" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
                     CYBER<span className="text-cyber-blue">TRACK</span>
                   </span>
                   <div className="flex items-center gap-1 mt-0.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-cyber-green animate-pulse"></div>
-                    <span className="text-[10px] text-cyber-green uppercase tracking-widest" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    <span className="text-[8px] sm:text-[10px] text-cyber-green uppercase tracking-widest" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
                       ONLINE
                     </span>
                   </div>
@@ -126,7 +128,7 @@ export default function Layout() {
               </div>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="lg:hidden text-gray-400 hover:text-cyber-blue transition-colors"
+                className="lg:hidden text-gray-400 hover:text-cyber-blue transition-colors touch-target"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -136,7 +138,7 @@ export default function Layout() {
           </div>
 
           {/* Navigation - Cyber Grid Style */}
-          <nav className="flex-1 p-4 overflow-y-auto custom-scrollbar">
+          <nav className="flex-1 p-3 sm:p-4 overflow-y-auto custom-scrollbar scrollbar-mobile">
             {/* Main Navigation */}
             <ul className="space-y-1.5">
               {navigation.map((item) => {
@@ -152,7 +154,7 @@ export default function Layout() {
                       to={item.href}
                       onClick={() => setSidebarOpen(false)}
                       className={`
-                        group relative flex items-center gap-3 px-4 py-3 rounded-lg
+                        group relative flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-lg
                         transition-all duration-300 ease-out
                         border border-transparent
                         ${isActive
@@ -216,7 +218,7 @@ export default function Layout() {
                         to={item.href}
                         onClick={() => setSidebarOpen(false)}
                         className={`
-                          group relative flex items-center gap-3 px-4 py-2.5 rounded-lg
+                          group relative flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg
                           transition-all duration-300 ease-out
                           border border-transparent
                           ${isActive
@@ -255,7 +257,7 @@ export default function Layout() {
           </nav>
 
           {/* User ID Card - Bottom */}
-          <div className="p-4 border-t border-cyber-blue/20 relative">
+          <div className="p-3 sm:p-4 border-t border-cyber-blue/20 relative">
             {/* Scanning line */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-blue to-transparent animate-scan-line"></div>
 
@@ -310,19 +312,19 @@ export default function Layout() {
       {/* Main content */}
       <div className="lg:pl-72 bg-bg-primary min-h-screen">
         {/* Mobile header - Cyberpunk style */}
-        <header className="lg:hidden sticky top-0 z-30 bg-[#0B0E11]/90 backdrop-blur-xl border-b border-cyber-blue/20 px-4 py-3 shadow-[0_0_20px_rgba(0,163,255,0.1)]">
+        <header className="lg:hidden sticky top-0 z-30 bg-[#0B0E11]/90 backdrop-blur-xl border-b border-cyber-blue/20 px-3 sm:px-4 py-2 sm:py-3 shadow-[0_0_20px_rgba(0,163,255,0.1)]">
           <div className="flex items-center justify-between">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-cyber-blue hover:text-white transition-colors"
+              className="text-cyber-blue hover:text-white transition-colors touch-target"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
-            <div className="flex items-center gap-2">
-              <Shield className="w-6 h-6 text-cyber-blue drop-shadow-[0_0_8px_rgba(0,163,255,0.6)]" />
-              <span className="font-bold text-text-primary">CyberTrack</span>
+            <div className="flex items-center gap-1 sm:gap-2">
+              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-cyber-blue drop-shadow-[0_0_8px_rgba(0,163,255,0.6)]" />
+              <span className="font-bold text-text-primary text-sm sm:text-base">CyberTrack</span>
             </div>
-            <div className="w-6" /> {/* Spacer for centering */}
+            <div className="w-5 sm:w-6" /> {/* Spacer for centering */}
           </div>
         </header>
 

@@ -166,7 +166,7 @@ export default function DataProtection() {
               </tbody>
             </table>
           </div>
-        </div>
+        </CyberCard>
 
         {/* Encryption Requirements */}
         <div className="glass rounded-lg p-8 mb-6">

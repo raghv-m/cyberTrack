@@ -48,13 +48,14 @@ export default function CyberCard({
         ${variants[variant]}
         ${hoverable || onClick ? 'cursor-pointer' : ''}
         ${className}
+        responsive-card-padding
       `}
     >
       {(title || Icon || badge) && (
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             {Icon && (
-              <div className="p-2 rounded-lg bg-cyber-blue/10 border border-cyber-blue/30">
+              <div className="p-2 rounded-lg bg-cyber-blue/10 border border-cyber-blue/30 self-start sm:self-center">
                 <Icon className="w-5 h-5 text-cyber-blue" />
               </div>
             )}
@@ -76,6 +77,7 @@ export default function CyberCard({
             <span className={`
               px-2.5 py-1 rounded-md text-xs font-mono font-medium
               border ${badgeColors[badgeColor]}
+              self-start sm:self-center
             `}>
               {badge}
             </span>

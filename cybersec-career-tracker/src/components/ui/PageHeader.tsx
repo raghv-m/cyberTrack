@@ -45,10 +45,10 @@ export default function PageHeader({
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 responsive-padding">
       {/* Breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <div className="flex items-center gap-2 mb-4 text-sm font-mono">
+        <div className="flex items-center gap-2 mb-4 text-sm font-mono flex-wrap">
           {breadcrumbs.map((crumb, index) => (
             <React.Fragment key={index}>
               {index > 0 && <ChevronRight className="w-4 h-4 text-text-muted" />}
@@ -68,22 +68,22 @@ export default function PageHeader({
       )}
 
       {/* Header Content */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-start gap-4">
           {Icon && (
-            <div className="p-3 rounded-xl bg-cyber-blue/10 border border-cyber-blue/30 shadow-neon-blue-sm">
+            <div className="p-3 rounded-xl bg-cyber-blue/10 border border-cyber-blue/30 shadow-neon-blue-sm self-start">
               <Icon className="w-8 h-8 text-cyber-blue" />
             </div>
           )}
           
           <div>
-            <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-4xl font-black text-white tracking-tight font-mono">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+              <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-mono">
                 {title}
               </h1>
               {badge && (
                 <span className={`
-                  px-3 py-1 rounded-md text-sm font-mono font-medium border
+                  px-3 py-1 rounded-md text-sm font-mono font-medium border self-start sm:self-center
                   ${badgeColors[badgeColor]}
                 `}>
                   {badge}
@@ -101,12 +101,13 @@ export default function PageHeader({
 
         {/* Actions */}
         {(primaryAction || secondaryAction) && (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
             {secondaryAction && (
               <CyberButton
                 variant="ghost"
                 onClick={secondaryAction.onClick}
                 icon={secondaryAction.icon}
+                className="action-btn-responsive"
               >
                 {secondaryAction.label}
               </CyberButton>
@@ -116,6 +117,7 @@ export default function PageHeader({
                 variant="primary"
                 onClick={primaryAction.onClick}
                 icon={primaryAction.icon}
+                className="action-btn-responsive"
               >
                 {primaryAction.label}
               </CyberButton>

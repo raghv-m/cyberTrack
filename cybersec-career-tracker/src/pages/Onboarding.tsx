@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Target, Clock, Award, Rocket, ChevronRight, ChevronLeft, CheckCircle } from 'lucide-react';
+import { Target, Clock, Award, Rocket, ChevronRight, ChevronLeft, CheckCircle, Sparkles } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { initializeUserGates } from '../utils/handsOnGates';
+import { generateCurriculum } from '../services/openaiService';
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
@@ -78,6 +79,14 @@ export default function Onboarding() {
 
     setLoading(true);
     try {
+      // Generate AI-powered curriculum
+      const aiCurriculum = await generateCurriculum({
+        currentLevel,
+        targetTier,
+        hoursPerWeek,
+        existingSkills
+      });
+
       await setDoc(doc(db, 'userGoals', currentUser.uid), {
         currentTier: currentLevel,
         targetTier,
@@ -88,8 +97,9 @@ export default function Onboarding() {
         customGoals: [],
         generatedCurriculum: {
           generatedAt: new Date(),
-          totalWeeks: calculateTotalWeeks(),
-          phases: generateCurriculum()
+          totalWeeks: aiCurriculum.totalWeeks,
+          phases: aiCurriculum.phases,
+          personalizedAdvice: aiCurriculum.personalizedAdvice
         }
       });
 
@@ -270,8 +280,8 @@ export default function Onboarding() {
           {step === 5 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 mb-6">
-                <Rocket className="w-8 h-8 text-primary" />
-                <h2 className="text-2xl font-bold text-text-primary">Ready to start your journey!</h2>
+                <Sparkles className="w-8 h-8 text-primary" />
+                <h2 className="text-2xl font-bold text-text-primary">AI-Powered Personalized Curriculum</h2>
               </div>
 
               <div className="space-y-4">
@@ -290,6 +300,13 @@ export default function Onboarding() {
                 <div className="bg-bg-secondary rounded-lg p-4">
                   <div className="text-sm text-text-secondary mb-2">Existing Skills</div>
                   <div className="text-text-primary font-semibold">{existingSkills.length} skills</div>
+                </div>
+                <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    <div className="text-sm text-primary font-semibold">AI-POWERED</div>
+                  </div>
+                  <p className="text-text-secondary text-sm">Our AI will create a personalized learning path with phases, skills, tools, and labs tailored to your goals.</p>
                 </div>
               </div>
             </div>

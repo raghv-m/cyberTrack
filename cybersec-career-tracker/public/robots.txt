@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cyberpathpro.com/sitemap.xml
+
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/

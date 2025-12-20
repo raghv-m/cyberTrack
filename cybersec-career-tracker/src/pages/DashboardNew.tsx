@@ -117,7 +117,7 @@ export default function DashboardNew() {
   const strokeDashoffset = circumference - (careerHealth / 100) * circumference;
 
   return (
-    <div className="min-h-screen bg-[#0B0E11] p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0B0E11] p-4 sm:p-6 relative overflow-hidden">
       {/* Hexagonal Grid Background */}
       <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
@@ -146,9 +146,9 @@ export default function DashboardNew() {
         </div>
 
         {/* Top Grid: Hero Card + Stats */}
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {/* Hero: Career Health Card */}
-          <div className="lg:col-span-2 bg-[#161B22]/60 backdrop-blur-xl rounded-2xl p-8 border border-[#FFD700]/30 shadow-[0_0_30px_rgba(255,215,0,0.2)] hover:shadow-[0_0_40px_rgba(255,215,0,0.3)] transition-all duration-200">
+          <div className="bg-[#161B22]/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-[#FFD700]/30 shadow-[0_0_30px_rgba(255,215,0,0.2)] hover:shadow-[0_0_40px_rgba(255,215,0,0.3)] transition-all duration-200">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-text-primary mb-2">Career Health</h2>
@@ -239,7 +239,7 @@ export default function DashboardNew() {
         </div>
 
         {/* Middle Grid: Quick Actions */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {[
             { icon: Award, label: 'Certifications', count: stats.certsInProgress, color: 'purple', route: '/app/certifications' },
             { icon: Code, label: 'Labs/CTFS', count: stats.labsCompleted, color: 'blue', route: '/app/labs' },
@@ -263,7 +263,7 @@ export default function DashboardNew() {
         </div>
 
         {/* Bottom Grid: Learning Plan + Recent Activity */}
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Learning Plan */}
           <div className="bg-[#161B22]/60 backdrop-blur-xl rounded-2xl p-6 border border-cyber-blue/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]">
             <div className="flex items-center justify-between mb-6">
@@ -365,7 +365,7 @@ export default function DashboardNew() {
         </div>
 
         {/* Bottom CTAs */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <button
             onClick={() => navigate('/app/roadmap')}
             className="card-neon-blue p-6 flex items-center justify-between group hover:scale-[1.02] transition-all duration-200"

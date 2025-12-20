@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
-import { Github, Linkedin, ExternalLink, CheckCircle, XCircle, Plus, FileText } from 'lucide-react';
+import { collection, query, where, getDocs, addDoc, doc, getDoc } from 'firebase/firestore';
+import { Github, Linkedin, ExternalLink, CheckCircle, XCircle, Plus, FileText, Sparkles, BookOpen, Code, Database } from 'lucide-react';
 import { verifyPortfolioItems, calculatePortfolioQualityScore } from '../utils/portfolioVerification';
 import { PortfolioItem } from '../types';
+import { generatePortfolioRecommendations } from '../services/openaiService';
 
 interface PortfolioItemDisplay extends PortfolioItem {
   verified: boolean;
@@ -27,6 +28,8 @@ export default function Portfolio() {
     skills: [] as string[]
   });
   const [submitting, setSubmitting] = useState(false);
+  const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
+  const [generatingAI, setGeneratingAI] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -79,6 +82,34 @@ export default function Portfolio() {
       }
     } catch (error) {
       console.error('Error fetching README:', error);
+    }
+  };
+
+  const generateAIRecommendations = async () => {
+    if (!currentUser) return;
+    
+    setGeneratingAI(true);
+    try {
+      // Get user goals
+      const goalsDoc = await getDoc(doc(db, 'userGoals', currentUser.uid));
+      const goalsData = goalsDoc.exists() ? goalsDoc.data() : {};
+      
+      // Get current skills
+      const skillsDoc = await getDoc(doc(db, 'skillsMatrix', currentUser.uid));
+      const skillsData = skillsDoc.exists() ? skillsDoc.data().skills : {};
+      
+      // Generate AI recommendations
+      const recommendations = await generatePortfolioRecommendations(
+        skillsData,
+        goalsData,
+        items
+      );
+      
+      setAiRecommendations(recommendations);
+    } catch (error) {
+      console.error('Error generating AI recommendations:', error);
+    } finally {
+      setGeneratingAI(false);
     }
   };
 
@@ -148,18 +179,28 @@ export default function Portfolio() {
   return (
     <div className="p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-text-primary mb-2">Portfolio</h1>
             <p className="text-text-secondary">Showcase your cybersecurity projects</p>
           </div>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-smooth flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Add Project
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={generateAIRecommendations}
+              disabled={generatingAI}
+              className="px-4 py-2 bg-gradient-to-r from-cyber-purple to-cyber-blue text-white rounded-lg hover:opacity-90 transition-smooth flex items-center gap-2 disabled:opacity-50"
+            >
+              <Sparkles className="w-5 h-5" />
+              {generatingAI ? 'Generating...' : 'AI Recommendations'}
+            </button>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:opacity-90 transition-smooth flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              Add Project
+            </button>
+          </div>
         </div>
 
         {/* Stats */}
@@ -245,6 +286,64 @@ export default function Portfolio() {
                 </button>
               </div>
             </form>
+          </div>
+        )}
+
+        {/* AI Recommendations */}
+        {aiRecommendations.length > 0 && (
+          <div className="glass rounded-lg p-6 mb-8 border-l-4 border-cyber-purple">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-6 h-6 text-cyber-purple" />
+                <h2 className="text-xl font-bold text-text-primary">AI-Powered Project Ideas</h2>
+              </div>
+              <button 
+                onClick={() => setAiRecommendations([])}
+                className="text-text-secondary hover:text-text-primary"
+              >
+                Close
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {aiRecommendations.map((rec, index) => (
+                <div key={index} className="bg-bg-secondary rounded-lg p-4 border border-cyber-purple/30">
+                  <h3 className="font-bold text-text-primary mb-2">{rec.projectName}</h3>
+                  <p className="text-sm text-text-secondary mb-3">{rec.description.substring(0, 100)}...</p>
+                  
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {rec.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
+                      <span key={techIndex} className="text-xs px-2 py-1 bg-cyber-blue/20 text-cyber-blue rounded-md">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-xs text-text-tertiary mb-3">
+                    <span className="capitalize px-2 py-1 bg-bg-tertiary rounded">
+                      {rec.difficulty}
+                    </span>
+                    <span>{rec.estimatedHours} hours</span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => {
+                      setNewItem({
+                        title: rec.projectName,
+                        githubUrl: '',
+                        linkedinUrl: '',
+                        description: rec.description,
+                        skills: rec.skillsDeveloped
+                      });
+                      setShowAddForm(true);
+                      setAiRecommendations(aiRecommendations.filter((_, i) => i !== index));
+                    }}
+                    className="w-full px-3 py-2 bg-cyber-purple text-white rounded-md text-sm hover:opacity-90 transition-smooth"
+                  >
+                    Add to Portfolio
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
