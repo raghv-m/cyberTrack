@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
-  apiKey: import.meta.env.OPENAI_API_KEY,
+  apiKey: (import.meta as any).env?.OPENAI_API_KEY,
 });
 
 export interface CurriculumInput {

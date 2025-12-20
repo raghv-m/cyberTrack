@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
-import { doc, getDoc, setDoc, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
-import { CheckCircle, Circle, Trash2, Plus, Target, TrendingUp, ListTodo, Flame, Award, Sparkles, RefreshCw } from 'lucide-react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { CheckCircle, Circle, Trash2, Plus, Target, ListTodo, Flame, Award, Sparkles } from 'lucide-react';
 import PageHeader from '../components/ui/PageHeader';
 import CyberCard from '../components/ui/CyberCard';
 import CyberButton from '../components/ui/CyberButton';
@@ -232,14 +232,7 @@ export default function TodoList() {
     setShowAddForm(false);
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'text-danger';
-      case 'medium': return 'text-warning';
-      case 'low': return 'text-success';
-      default: return 'text-text-secondary';
-    }
-  };
+
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -332,14 +325,11 @@ export default function TodoList() {
             onClick: () => setShowAddForm(!showAddForm),
             icon: Plus
           }}
-          secondaryActions={[
-            {
-              label: generatingAI ? 'Generating...' : 'AI Suggestions',
-              onClick: generateAITodos,
-              icon: Sparkles,
-              disabled: generatingAI
-            }
-          ]}
+          secondaryAction={{
+            label: generatingAI ? 'Generating...' : 'AI Suggestions',
+            onClick: generateAITodos,
+            icon: Sparkles
+          }}
         />
 
         {/* Stats Cards */}

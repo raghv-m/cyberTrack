@@ -13,9 +13,8 @@ import {
   Zap,
   Shield,
   Search,
-  Code,
-  Cloud,
   Database,
+  Cloud,
   Sparkles
 } from 'lucide-react';
 import { generateTodoRecommendations } from '../services/openaiService';
@@ -454,7 +453,7 @@ export default function TierRoles() {
           </h2>
           
           <div className="space-y-8">
-            {Object.values(TIER_ROLES).map((role, index) => (
+            {Object.values(TIER_ROLES).map((role) => (
               <div key={role.id} className="relative pl-8 pb-8 border-l-2 border-cyber-blue/30 last:pb-0">
                 {/* Timeline dot */}
                 <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-cyber-blue border-4 border-[#0B0E11]"></div>

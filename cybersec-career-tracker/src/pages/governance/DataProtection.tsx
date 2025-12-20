@@ -1,7 +1,7 @@
-import { Database, Shield, Lock, Eye, FileCheck, Trash2, Key, ArrowRight, CheckCircle } from 'lucide-react';
+import { Database, Shield, Lock, Eye, FileCheck, Trash2, ArrowRight, CheckCircle } from 'lucide-react';
 import PageHeader from '../../components/ui/PageHeader';
 import CyberCard from '../../components/ui/CyberCard';
-import FlowDiagram from '../../components/ui/FlowDiagram';
+
 import FlowNode from '../../components/ui/FlowNode';
 
 export default function DataProtection() {

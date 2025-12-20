@@ -1,6 +1,6 @@
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, getDoc, orderBy, limit, Timestamp } from 'firebase/firestore';
-import { sendEmail, generateWeeklySummaryEmail, generateMilestoneEmail, generateWelcomeEmail, generateLoginNotificationEmail, generateLogoutNotificationEmail, generateMonthlyProgressEmail } from './emailService';
+import { collection, query, where, getDocs, doc, getDoc, orderBy, limit } from 'firebase/firestore';
+import { sendEmail, generateWeeklySummaryEmail, generateWelcomeEmail, generateLoginNotificationEmail, generateLogoutNotificationEmail, generateMonthlyProgressEmail } from './emailService';
 
 interface EmailConfig {
   to: string;
@@ -102,17 +102,17 @@ export async function sendWelcomeEmail(userEmail: string, userName: string, user
   try {
     const html = generateWelcomeEmail(userName, userEmail);
     
-    const emailData = {
+    const emailConfig = {
       to: userEmail,
       subject: `🚀 Welcome to CyberPath Pro, ${userName}!`,
       html: html
     };
     
     // Save to email log
-    await saveEmailLog(userId, 'welcome', emailData);
+    await saveEmailLog(userId, 'welcome');
     
     // Send email
-    return await sendEmail(emailData);
+    return await sendEmail(emailConfig);
   } catch (error) {
     console.error('Error sending welcome email:', error);
     return false;
@@ -132,7 +132,7 @@ export async function sendLoginNotification(userEmail: string, userName: string,
     };
     
     // Save to email log
-    await saveEmailLog(userId, 'login', emailData);
+    await saveEmailLog(userId, 'login');
     
     // Send email
     return await sendEmail(emailData);
@@ -155,7 +155,7 @@ export async function sendLogoutNotification(userEmail: string, userName: string
     };
     
     // Save to email log
-    await saveEmailLog(userId, 'logout', emailData);
+    await saveEmailLog(userId, 'logout');
     
     // Send email
     return await sendEmail(emailData);
@@ -177,7 +177,7 @@ export async function sendWeeklySummaryEmail(userEmail: string, userName: string
     };
     
     // Save to email log
-    await saveEmailLog(userId, 'weekly_summary', emailData);
+    await saveEmailLog(userId, 'weekly_summary');
     
     // Send email
     return await sendEmail(emailData);
@@ -199,7 +199,7 @@ export async function sendMonthlyProgressEmail(userEmail: string, userName: stri
     };
     
     // Save to email log
-    await saveEmailLog(userId, 'monthly_progress', emailData);
+    await saveEmailLog(userId, 'monthly_progress');
     
     // Send email
     return await sendEmail(emailData);
@@ -210,7 +210,7 @@ export async function sendMonthlyProgressEmail(userEmail: string, userName: stri
 }
 
 // Save email log to Firestore
-async function saveEmailLog(userId: string, type: string, emailData: EmailConfig): Promise<void> {
+async function saveEmailLog(userId: string, type: string): Promise<void> {
   try {
     // In a real implementation, you would save this to Firestore
     // For now, we'll just log it

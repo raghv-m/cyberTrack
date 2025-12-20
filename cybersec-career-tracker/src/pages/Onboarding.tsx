@@ -42,38 +42,6 @@ export default function Onboarding() {
     return 12;
   };
 
-  const generateCurriculum = () => {
-    const phases = [];
-
-    phases.push({
-      phaseNumber: 0,
-      phaseName: 'Foundation',
-      startWeek: 1,
-      endWeek: 12,
-      skills: ['Networking', 'OS Fundamentals', 'Security Concepts'],
-      tools: ['Wireshark', 'Splunk', 'Nmap'],
-      labs: ['TryHackMe SOC Level 1', 'CyberDefenders Blue Team Labs'],
-      certifications: ['Google Cybersecurity Certificate'],
-      weeklyHours: hoursPerWeek
-    });
-
-    if (targetTier === 'tier1' || targetTier === 'tier2' || targetTier === 'tier3') {
-      phases.push({
-        phaseNumber: 1,
-        phaseName: 'SOC Tier 1 Preparation',
-        startWeek: 13,
-        endWeek: 20,
-        skills: ['Incident Response', 'Log Analysis', 'Threat Detection'],
-        tools: ['EDR Tools', 'SIEM Advanced', 'Forensics Tools'],
-        labs: ['Blue Team Labs Online', 'LetsDefend'],
-        certifications: ['CompTIA Security+'],
-        weeklyHours: hoursPerWeek
-      });
-    }
-
-    return phases;
-  };
-
   const handleComplete = async () => {
     if (!currentUser) return;
 
@@ -87,6 +55,26 @@ export default function Onboarding() {
         existingSkills
       });
 
+      // Fallback if AI fails
+      const fallbackCurriculum = {
+        totalWeeks: calculateTotalWeeks(),
+        phases: [
+          {
+            phaseNumber: 1,
+            phaseName: 'Foundation',
+            startWeek: 1,
+            endWeek: 12,
+            skills: ['Networking', 'OS Fundamentals', 'Security Concepts'],
+            tools: ['Wireshark', 'Splunk', 'Nmap'],
+            labs: ['TryHackMe SOC Level 1', 'CyberDefenders Blue Team Labs'],
+            certifications: ['Google Cybersecurity Certificate'],
+            weeklyHours: hoursPerWeek,
+            aiRecommendations: []
+          }
+        ],
+        personalizedAdvice: 'Focus on building a strong foundation in networking and security concepts.'
+      };
+
       await setDoc(doc(db, 'userGoals', currentUser.uid), {
         currentTier: currentLevel,
         targetTier,
@@ -97,9 +85,9 @@ export default function Onboarding() {
         customGoals: [],
         generatedCurriculum: {
           generatedAt: new Date(),
-          totalWeeks: aiCurriculum.totalWeeks,
-          phases: aiCurriculum.phases,
-          personalizedAdvice: aiCurriculum.personalizedAdvice
+          totalWeeks: aiCurriculum?.totalWeeks || fallbackCurriculum.totalWeeks,
+          phases: aiCurriculum?.phases || fallbackCurriculum.phases,
+          personalizedAdvice: aiCurriculum?.personalizedAdvice || fallbackCurriculum.personalizedAdvice
         }
       });
 

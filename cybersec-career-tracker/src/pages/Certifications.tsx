@@ -7,14 +7,10 @@ import {
   Calendar, 
   DollarSign, 
   Clock, 
-  CheckCircle, 
   Target, 
   BookOpen, 
-  TrendingUp, 
   Sparkles,
-  ExternalLink,
-  Plus,
-  Edit3
+  Plus
 } from 'lucide-react';
 import { generateTodoRecommendations } from '../services/openaiService';
 
@@ -100,7 +96,7 @@ export default function Certifications() {
   const [certifications, setCertifications] = useState<Certification[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [selectedCert, setSelectedCert] = useState<string>('');
+
   const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
   const [generatingAI, setGeneratingAI] = useState(false);
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { Target, TrendingUp, Award, Filter, Sparkles, Lightbulb, BookOpen, Trophy, Info } from 'lucide-react';
+import { Target, TrendingUp, Award, Filter, Sparkles, Lightbulb, BookOpen, Trophy } from 'lucide-react';
 import { analyzeSkills } from '../services/openaiService';
 
 interface Skill {
@@ -183,20 +183,7 @@ export default function SkillsMatrix() {
     }
   };
 
-  const getTopSkills = () => {
-    return Object.entries(skills)
-      .sort(([,a], [,b]) => b.proficiency - a.proficiency)
-      .slice(0, 5)
-      .map(([name, skill]) => ({ name, proficiency: skill.proficiency }));
-  };
 
-  const getWeakSkills = () => {
-    return Object.entries(skills)
-      .filter(([,skill]) => skill.proficiency < 3)
-      .sort(([,a], [,b]) => a.proficiency - b.proficiency)
-      .slice(0, 5)
-      .map(([name, skill]) => ({ name, proficiency: skill.proficiency }));
-  };
 
   const getOverallLevel = () => {
     const avg = parseFloat(calculateAverageProficiency());

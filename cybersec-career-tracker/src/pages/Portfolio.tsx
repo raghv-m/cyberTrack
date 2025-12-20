@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs, addDoc, doc, getDoc } from 'firebase/firestore';
-import { Github, Linkedin, ExternalLink, CheckCircle, XCircle, Plus, FileText, Sparkles, BookOpen, Code, Database } from 'lucide-react';
+import { Github, Linkedin, ExternalLink, CheckCircle, XCircle, Plus, FileText, Sparkles } from 'lucide-react';
 import { verifyPortfolioItems, calculatePortfolioQualityScore } from '../utils/portfolioVerification';
 import { PortfolioItem } from '../types';
 import { generatePortfolioRecommendations } from '../services/openaiService';
