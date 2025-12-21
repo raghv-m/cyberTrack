@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection - users can only read/write their own document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Nested collections for user preferences
+      match /preferences/{prefId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Nested collections for email preferences
+      match /emailPreferences/{prefId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // User goals collection - users can only read/write their own document
+    match /userGoals/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Skills matrix collection - users can only read/write their own document
+    match /skillsMatrix/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Daily logs collection - users can only read/write their own logs
+    match /dailyLogs/{logId} {
+      allow read, write: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.resource.data.userId == request.auth.uid);
+    }
+    
+    // Todos collection - users can only read/write their own document
+    match /todos/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Portfolio items collection - users can only read/write their own items
+    match /portfolioItems/{itemId} {
+      allow read, write: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.resource.data.userId == request.auth.uid);
+    }
+    
+    // Job applications collection - users can only read/write their own applications
+    match /jobApplications/{appId} {
+      allow read, write: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.resource.data.userId == request.auth.uid);
+    }
+    
+    // Incident reports collection - users can read all, but only write their own
+    match /incidentReports/{reportId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && 
+        request.resource.data.submittedBy.uid == request.auth.uid;
+      allow update: if request.auth != null && 
+        (resource.data.submittedBy.uid == request.auth.uid || 
+         // Allow admins to update
+         ('admin' in request.auth.token.roles));
+    }
+    
+    // News articles collection - everyone can read, only backend can write
+    match /newsArticles/{articleId} {
+      allow read: if true;  // Public read access
+      allow write: if false; // Only backend can write
+    }
+    
+    // Notifications collection - users can only read/write their own notifications
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.resource.data.userId == request.auth.uid);
+    }
+    
+    // Email queue collection - only backend can read/write
+    match /emailQueue/{queueId} {
+      allow read, write: if false; // Only backend functions can access
+    }
+  }
+}

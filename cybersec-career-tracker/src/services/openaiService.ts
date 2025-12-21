@@ -1,10 +1,19 @@
 import OpenAI from 'openai';
 
 // Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
+let openai: OpenAI | null = null;
+
+try {
+  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+  if (apiKey) {
+    openai = new OpenAI({
+      apiKey: apiKey,
+      dangerouslyAllowBrowser: true
+    });
+  }
+} catch (error) {
+  console.warn('OpenAI client initialization failed:', error);
+}
 
 export interface CurriculumInput {
   currentLevel: string;
@@ -71,6 +80,11 @@ export interface PortfolioRecommendation {
  */
 export async function generateCurriculum(input: CurriculumInput): Promise<GeneratedCurriculum> {
   try {
+    // Check if OpenAI is properly configured
+    if (!openai) {
+      throw new Error('OpenAI is not properly configured. Please check your API key.');
+    }
+
     const prompt = `
       You are a cybersecurity career advisor. Based on the following user information, create a detailed, personalized curriculum:
       
@@ -134,7 +148,7 @@ export async function generateCurriculum(input: CurriculumInput): Promise<Genera
     return JSON.parse(content);
   } catch (error) {
     console.error('Error generating curriculum:', error);
-    throw new Error('Failed to generate curriculum');
+    throw new Error(`Failed to generate curriculum: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
 

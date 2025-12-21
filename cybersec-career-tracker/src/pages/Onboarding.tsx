@@ -102,7 +102,7 @@ export default function Onboarding() {
       navigate('/app/dashboard');
     } catch (error) {
       console.error('Error saving onboarding:', error);
-      alert('Failed to save. Please try again.');
+      alert(`Failed to generate curriculum: ${error instanceof Error ? error.message : 'Unknown error'}. Using fallback curriculum.`);
     } finally {
       setLoading(false);
     }

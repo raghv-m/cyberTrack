@@ -10,6 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// API Routes
+app.use('/api', apiRoutes);
+
 // Initialize Firebase Admin (Optional - only needed if backend needs to write to Firebase)
 // For now, we'll skip Firebase Admin since the frontend handles all Firebase operations
 let db = null;
